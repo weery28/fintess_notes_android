@@ -6,5 +6,8 @@ interface LoginContract {
 
     interface View : MvpContract.View
 
-    interface Presenter : MvpContract.Presenter<View>
+    interface Presenter : MvpContract.Presenter<View> {
+
+        fun onGoogleTokenRecieved(googleToken : String)
+    }
 }

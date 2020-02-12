@@ -5,4 +5,9 @@ import javax.inject.Inject
 
 class LoginPresenter @Inject constructor() :
     BasePresenter<LoginContract.View>(),
-    LoginContract.Presenter
+    LoginContract.Presenter {
+
+    override fun onGoogleTokenRecieved(googleToken: String) {
+        println("GOOGLE TOKEN ---> $googleToken")
+    }
+}
