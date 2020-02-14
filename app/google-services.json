@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "227809934036",
+    "firebase_url": "https://fitness-notes-268017.firebaseio.com",
+    "project_id": "fitness-notes-268017",
+    "storage_bucket": "fitness-notes-268017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:227809934036:android:9bf36df08b86e8ab845941",
+        "android_client_info": {
+          "package_name": "me.coweery.fitnessnotes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "227809934036-faib3ro8ogs2j0uha5qu0jippgqjp953.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.coweery.fitnessnotes",
+            "certificate_hash": "c503958f68a33ad150efd8b6010852f4f1b71fad"
+          }
+        },
+        {
+          "client_id": "227809934036-t0338k469prn977jkbqrvr0ot50kuo3o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAH83NQKtBtgb9WLoxfAEoxp18XX6qyqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "227809934036-t0338k469prn977jkbqrvr0ot50kuo3o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
