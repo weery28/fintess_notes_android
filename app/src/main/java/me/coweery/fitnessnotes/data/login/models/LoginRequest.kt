@@ -1,4 +1,4 @@
-package me.coweery.fitnessnotes.data.login
+package me.coweery.fitnessnotes.data.login.models
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

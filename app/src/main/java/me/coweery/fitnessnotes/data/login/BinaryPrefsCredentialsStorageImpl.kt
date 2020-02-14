@@ -30,5 +30,4 @@ class BinaryPrefsCredentialsStorageImpl @Inject constructor(context: Context) :
     }
 
     //endregion
-
 }

@@ -96,7 +96,8 @@ class NetworkModule {
     @Singleton
     @Named("api")
     fun provideAPIRetrofit(
-        @Named("api") okHttpClient: OkHttpClient, converter: Converter.Factory,
+        @Named("api") okHttpClient: OkHttpClient,
+        converter: Converter.Factory,
         callAdapter: CallAdapter.Factory
     ): Retrofit {
         return Retrofit.Builder()
@@ -110,7 +111,10 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideErrorResponseBodyConverter(@Named("api") retrofit: Retrofit): Converter<@JvmWildcard ResponseBody, @JvmWildcard ServerErrorResponse> {
-        return retrofit.responseBodyConverter<ServerErrorResponse>(ServerErrorResponse::class.java, emptyArray())
+        return retrofit.responseBodyConverter<ServerErrorResponse>(
+            ServerErrorResponse::class.java,
+            emptyArray()
+        )
     }
 
     @Provides

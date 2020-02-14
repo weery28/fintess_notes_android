@@ -35,6 +35,4 @@ class AppDataModule {
     }
 
     //endregion
-
-
 }

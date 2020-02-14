@@ -37,9 +37,6 @@ class AuthErrorListenerService @Inject constructor(
     }
 
     //endregion
-
 }
 
-class UnauthorizedError() {
-
-}
+class UnauthorizedError()

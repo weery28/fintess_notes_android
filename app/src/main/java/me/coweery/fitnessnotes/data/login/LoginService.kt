@@ -5,4 +5,6 @@ import io.reactivex.Completable
 interface LoginService {
 
     fun login(login: String, password: String): Completable
+
+    fun loginWithGoogle(googleToken: String): Completable
 }
