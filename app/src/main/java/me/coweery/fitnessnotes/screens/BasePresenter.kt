@@ -1,5 +1,7 @@
 package me.coweery.fitnessnotes.screens
 
+import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 
 abstract class BasePresenter<T : MvpContract.View> : MvpContract.Presenter<T> {
@@ -21,6 +23,16 @@ abstract class BasePresenter<T : MvpContract.View> : MvpContract.Presenter<T> {
 
     protected fun Disposable.catchDisposable() {
         disposables.add(this)
+        disposables.removeAll { it.isDisposed }
+    }
+
+    protected fun Single<T>.safetySubscribe(onComplete : (T) -> Unit, onError : (Throwable) -> Unit){
+        disposables.add(subscribe(onComplete, onError))
+        disposables.removeAll { it.isDisposed }
+    }
+
+    protected fun Completable.safetySubscribe(onComplete : () -> Unit, onError : (Throwable) -> Unit){
+        disposables.add(subscribe(onComplete, onError))
         disposables.removeAll { it.isDisposed }
     }
 }

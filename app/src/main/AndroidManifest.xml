@@ -18,5 +18,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".screens.splash.SplashActivity" />
+        <activity android:name=".screens.registration.RegistrationActivity" />
     </application>
 </manifest>

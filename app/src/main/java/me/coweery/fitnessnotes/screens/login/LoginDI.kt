@@ -15,7 +15,4 @@ class LoginModule {
 }
 
 @Subcomponent(modules = [LoginModule::class])
-interface LoginComponent : SimpleDIComponent<LoginActivity> {
-
-    override fun inject(loginActivity: LoginActivity)
-}
+interface LoginComponent : SimpleDIComponent<LoginActivity>

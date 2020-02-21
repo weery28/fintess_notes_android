@@ -3,18 +3,18 @@ package me.coweery.fitnessnotes.screens.login
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
 import com.google.android.material.textview.MaterialTextView
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
 import me.coweery.fitnessnotes.screens.BaseActivity
+import me.coweery.fitnessnotes.screens.registration.RegistrationActivity
 import javax.inject.Inject
 
 class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(),
@@ -33,6 +33,7 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
     private val signInBasicButton by lazy { findViewById<MaterialTextView>(R.id.btn_sign_in) }
     private val etLogin by lazy { findViewById<EditText>(R.id.et_login) }
     private val etPassword by lazy { findViewById<EditText>(R.id.et_password) }
+    private val registrationButton by lazy { findViewById<TextView>(R.id.tv_registration) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +54,10 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
 
         signInBasicButton.setOnClickListener {
             onSignInBasicClicked()
+        }
+
+        registrationButton.setOnClickListener {
+            onRegistrationClicked()
         }
     }
 
@@ -93,5 +98,9 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
         presenter.onBasicLoginDataRecieved(
             etLogin.text.toString(), etPassword.text.toString()
         )
+    }
+
+    private fun onRegistrationClicked(){
+        startActivity(Intent(this, RegistrationActivity::class.java))
     }
 }
