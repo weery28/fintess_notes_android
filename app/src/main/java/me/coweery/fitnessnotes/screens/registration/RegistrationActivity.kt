@@ -49,6 +49,7 @@ class RegistrationActivity : BaseActivity<RegistrationContract.View, Registratio
         etRepeatPassword.setOnFocusChangeListener { v, hasFocus ->
             etRepeatPassword.error = null
         }
+
         etPassword.setOnFocusChangeListener { v, hasFocus ->
             etPassword.error = null
         }

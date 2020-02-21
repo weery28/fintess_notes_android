@@ -34,4 +34,5 @@ abstract class BaseActivity<S : MvpContract.View, T : MvpContract.Presenter<S>> 
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
 }
