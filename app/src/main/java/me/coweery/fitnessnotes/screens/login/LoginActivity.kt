@@ -2,6 +2,7 @@ package me.coweery.fitnessnotes.screens.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -10,6 +11,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.SignInButton
 import com.google.android.gms.common.api.ApiException
+import com.google.android.material.textview.MaterialTextView
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
 import me.coweery.fitnessnotes.screens.BaseActivity
@@ -27,8 +29,8 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
     override lateinit var presenter: LoginContract.Presenter
 
     private lateinit var mGoogleSignInClient: GoogleSignInClient
-    private val signInByGoogleButton by lazy { findViewById<SignInButton>(R.id.sign_in_button) }
-    private val signInBasicButton by lazy { findViewById<Button>(R.id.btn_sign_in) }
+    private val signInByGoogleButton by lazy { findViewById<View>(R.id.ll_sign_in_google) }
+    private val signInBasicButton by lazy { findViewById<MaterialTextView>(R.id.btn_sign_in) }
     private val etLogin by lazy { findViewById<EditText>(R.id.et_login) }
     private val etPassword by lazy { findViewById<EditText>(R.id.et_password) }
 
@@ -45,7 +47,6 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
                     .build()
             )
 
-        signInByGoogleButton.setSize(SignInButton.SIZE_ICON_ONLY)
         signInByGoogleButton.setOnClickListener {
             onSignInWithGoogleClicked()
         }

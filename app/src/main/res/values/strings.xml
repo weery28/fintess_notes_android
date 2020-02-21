@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">Fitness Notes</string>
+    <string name="app_name_caps">FITNESS NOTES</string>
     <string name="oauth_client_id">227809934036-l8hdcl5hmbf7vadbvs3kscn6kbjtcg3u.apps.googleusercontent.com</string>
-    <string name="login">Логинг</string>
+    <string name="login">Логин</string>
     <string name="password">Пароль</string>
-    <string name="sign_in">Вход</string>
+    <string name="sign_in">ВОЙТИ</string>
     <string name="registration">Регистрация</string>
+    <string name="or_with">или через</string>
+    <string name="google">Google</string>
+    <string name="underlined_registration"><u>Регистрация</u></string>
+    <string name="underlined_forgot_password"><u>Забыли пароль?</u></string>
 </resources>
