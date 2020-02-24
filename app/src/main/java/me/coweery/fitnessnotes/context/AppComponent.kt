@@ -5,6 +5,7 @@ import me.coweery.fitnessnotes.data.AppDataModule
 import me.coweery.fitnessnotes.screens.login.LoginComponent
 import me.coweery.fitnessnotes.screens.registration.RegistrationComponent
 import me.coweery.fitnessnotes.screens.splash.SplashComponent
+import me.coweery.fitnessnotes.screens.trainings.list.TrainingsListComponent
 import me.coweery.fleetmanagment.repositories.NetworkModule
 import javax.inject.Singleton
 
@@ -17,4 +18,6 @@ interface AppComponent {
     fun splashScreenComponent(): SplashComponent
 
     fun registrationScreenComponent(): RegistrationComponent
+
+    fun trainingsListScreenComponent() : TrainingsListComponent
 }

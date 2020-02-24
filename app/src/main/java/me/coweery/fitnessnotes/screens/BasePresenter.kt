@@ -26,7 +26,7 @@ abstract class BasePresenter<T : MvpContract.View> : MvpContract.Presenter<T> {
         disposables.removeAll { it.isDisposed }
     }
 
-    protected fun Single<T>.safetySubscribe(onComplete : (T) -> Unit, onError : (Throwable) -> Unit){
+    protected fun <R> Single<R>.safetySubscribe(onComplete : (R) -> Unit, onError : (Throwable) -> Unit){
         disposables.add(subscribe(onComplete, onError))
         disposables.removeAll { it.isDisposed }
     }

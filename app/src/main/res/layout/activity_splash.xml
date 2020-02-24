@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/black"
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fitness Notes"
-        android:textSize="76dp"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:text="Fitness Notes"
+        android:textSize="76dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="By Oleg, Anna, Svetlana"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="600dp"
-        android:layout_gravity="center_horizontal"/>
+        android:text="By Oleg, Anna, Svetlana" />
 
 </FrameLayout>
