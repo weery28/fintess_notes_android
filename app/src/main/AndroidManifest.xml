@@ -21,5 +21,6 @@
         </activity>
         <activity android:name=".screens.registration.RegistrationActivity" />
         <activity android:name=".screens.trainings.list.TrainingsListActivity" />
+        <activity android:name=".screens.trainings.training.TrainingActivity" />
     </application>
 </manifest>

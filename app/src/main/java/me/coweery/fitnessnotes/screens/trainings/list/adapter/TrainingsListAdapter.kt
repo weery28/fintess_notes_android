@@ -1,4 +1,4 @@
-package me.coweery.fitnessnotes.screens.trainings.list.list
+package me.coweery.fitnessnotes.screens.trainings.list.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,16 +11,16 @@ import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.data.trainings.Training
 
 class TrainingsListAdapter(
-    private val context : Context,
-    private val trainings : List<Training>
+    private val context: Context,
+    private val trainings: List<Training>
 ) : BaseAdapter() {
 
     private val inflater = LayoutInflater.from(context);
 
     override fun getView(index: Int, convertView: View?, parent: ViewGroup): View {
 
-        val view : View
-        val viewHolder = if (convertView == null){
+        val view: View
+        val viewHolder = if (convertView == null) {
 
             view = inflater.inflate(R.layout.trainings_list_item, parent, false)
             ViewHolder(
@@ -51,8 +51,8 @@ class TrainingsListAdapter(
 
     class ViewHolder(
 
-        val id : Long,
-        val tvName : TextView,
-        val cbIsComplete : CheckBox
+        val id: Long,
+        val tvName: TextView,
+        val cbIsComplete: CheckBox
     )
 }

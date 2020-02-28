@@ -1,9 +1,8 @@
 package me.coweery.fitnessnotes.screens
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.MenuItem
-
+import androidx.appcompat.app.AppCompatActivity
 
 abstract class BaseActivity<S : MvpContract.View, T : MvpContract.Presenter<S>> : MvpContract.View,
     AppCompatActivity() {

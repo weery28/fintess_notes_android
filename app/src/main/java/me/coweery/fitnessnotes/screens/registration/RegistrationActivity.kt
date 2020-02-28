@@ -16,7 +16,9 @@ import me.coweery.fitnessnotes.context.AppContext
 import me.coweery.fitnessnotes.screens.BaseActivity
 import javax.inject.Inject
 
-class RegistrationActivity : BaseActivity<RegistrationContract.View, RegistrationContract.Presenter>(), RegistrationContract.View {
+class RegistrationActivity :
+    BaseActivity<RegistrationContract.View, RegistrationContract.Presenter>(),
+    RegistrationContract.View {
 
     @Inject
     override lateinit var presenter: RegistrationContract.Presenter
@@ -65,10 +67,10 @@ class RegistrationActivity : BaseActivity<RegistrationContract.View, Registratio
     }
 
     override fun openMainScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun onRegistrationClicked(){
+    private fun onRegistrationClicked() {
 
         presenter.onRegistrationClicked(
             etLogin.text.toString(),

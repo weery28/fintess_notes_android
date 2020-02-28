@@ -100,7 +100,7 @@ class LoginActivity : BaseActivity<LoginContract.View, LoginContract.Presenter>(
         )
     }
 
-    private fun onRegistrationClicked(){
+    private fun onRegistrationClicked() {
         startActivity(Intent(this, RegistrationActivity::class.java))
     }
 }

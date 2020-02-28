@@ -13,6 +13,6 @@ interface RegistrationContract {
 
     interface Presenter : MvpContract.Presenter<View> {
 
-        fun onRegistrationClicked(login : String, password : String, repeatPassword : String)
+        fun onRegistrationClicked(login: String, password: String, repeatPassword: String)
     }
 }

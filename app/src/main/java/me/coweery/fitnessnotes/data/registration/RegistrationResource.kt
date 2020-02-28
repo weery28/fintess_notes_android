@@ -5,5 +5,5 @@ import retrofit2.http.Body
 
 interface RegistrationResource {
 
-    fun registration(@Body request : CreateUserRequest) : Completable
+    fun registration(@Body request: CreateUserRequest): Completable
 }

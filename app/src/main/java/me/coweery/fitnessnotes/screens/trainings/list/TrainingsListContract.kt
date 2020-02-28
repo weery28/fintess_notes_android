@@ -7,11 +7,15 @@ interface TrainingsListContract {
 
     interface View : MvpContract.View {
 
-        fun showTrainings(list : List<Training>)
+        fun showTrainings(list: List<Training>)
+
+        fun showCreateTrainingScreen()
     }
 
     interface Presenter : MvpContract.Presenter<View> {
 
         fun onScreenLoaded()
+
+        fun onAddTrainingClicked()
     }
 }

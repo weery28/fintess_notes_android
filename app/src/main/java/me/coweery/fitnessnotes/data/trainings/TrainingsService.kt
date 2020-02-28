@@ -5,7 +5,7 @@ import io.reactivex.Single
 
 interface TrainingsService {
 
-    fun getAll() : Single<List<Training>>
+    fun getAll(): Single<List<Training>>
 
-    fun save(training: Training) : Completable
+    fun save(training: Training): Completable
 }
