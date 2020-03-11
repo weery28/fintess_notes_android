@@ -32,17 +32,7 @@ class RegistrationActivity :
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
-
-        setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent))
-
-        findViewById<Toolbar>(R.id.toolbar).apply {
-            setBackgroundColor(Color.TRANSPARENT)
-            setSupportActionBar(this)
-            supportActionBar?.title = null
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-
-        setBackArrowColor(ContextCompat.getColor(this, android.R.color.white))
+        setupToolbar()
 
         registrationButton.setOnClickListener {
             onRegistrationClicked()
@@ -77,20 +67,5 @@ class RegistrationActivity :
             etPassword.text.toString(),
             etRepeatPassword.text.toString()
         )
-    }
-
-    fun AppCompatActivity.setStatusBarColor(color: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = this.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.statusBarColor = color
-        }
-    }
-
-    fun AppCompatActivity.setBackArrowColor(color: Int) {
-        val upArrow: Drawable? = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material)
-        upArrow?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-        supportActionBar?.setHomeAsUpIndicator(upArrow)
     }
 }

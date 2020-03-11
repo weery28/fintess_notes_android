@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/charcoal_grey"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/side_margin"
+        android:backgroundTint="@color/brown_grey"
+        android:hint="@string/exercise_name"
+        android:inputType="text"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/et_weight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/side_margin"
+        android:backgroundTint="@color/brown_grey"
+        android:hint="@string/weight"
+        android:inputType="number"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/et_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/side_margin"
+        android:backgroundTint="@color/brown_grey"
+        android:hint="@string/count"
+        android:inputType="number"
+        android:textSize="20dp" />
+
+    <EditText
+        android:id="@+id/et_sets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/side_margin"
+        android:backgroundTint="@color/brown_grey"
+        android:hint="@string/sets"
+        android:inputType="number"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/side_margin"
+        android:background="@color/orange"
+        android:text="@string/save"
+        android:textColor="@android:color/white" />
+
+
+</LinearLayout>

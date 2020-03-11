@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 class Training(
     @PrimaryKey
-    val id: Long,
+    val id: Long? = null,
     val name: String,
     val isComplete: Boolean
 )

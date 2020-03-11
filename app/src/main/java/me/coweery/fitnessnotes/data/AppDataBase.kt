@@ -10,7 +10,7 @@ import me.coweery.fitnessnotes.data.trainings.TrainingsDAO
 
 @Database(
     entities = [Training::class, Exercise::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class AppDataBase : RoomDatabase() {

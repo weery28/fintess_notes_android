@@ -4,6 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
 import me.coweery.fitnessnotes.screens.SimpleDIComponent
+import me.coweery.fitnessnotes.screens.trainings.training.input.InputExerciseFragment
 
 @Module
 class TrainingsModule {

@@ -16,7 +16,7 @@ class ExercisesServiceImpl @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .zipWith(Single.just(exercise)) { id, ex ->
-                Exercise(id, ex.name, ex.trainingId)
+                Exercise(id, ex.name, ex.trainingId, ex.weight, ex.count, ex.sets)
             }
     }
 }

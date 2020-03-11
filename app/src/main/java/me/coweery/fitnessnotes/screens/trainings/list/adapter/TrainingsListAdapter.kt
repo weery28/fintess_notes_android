@@ -11,10 +11,11 @@ import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.data.trainings.Training
 
 class TrainingsListAdapter(
-    private val context: Context,
-    private val trainings: List<Training>
+    private val context: Context
 ) : BaseAdapter() {
 
+
+    public val trainings = mutableListOf<Training>()
     private val inflater = LayoutInflater.from(context);
 
     override fun getView(index: Int, convertView: View?, parent: ViewGroup): View {
@@ -24,7 +25,6 @@ class TrainingsListAdapter(
 
             view = inflater.inflate(R.layout.trainings_list_item, parent, false)
             ViewHolder(
-                trainings[index].id,
                 view.findViewById(R.id.tv_name),
                 view.findViewById(R.id.cb_is_complete)
             ).apply {
@@ -50,8 +50,6 @@ class TrainingsListAdapter(
     override fun getCount(): Int = trainings.size
 
     class ViewHolder(
-
-        val id: Long,
         val tvName: TextView,
         val cbIsComplete: CheckBox
     )

@@ -77,7 +77,9 @@ class AppDataModule {
         return Room.databaseBuilder(
             appContext,
             AppDataBase::class.java, "fn_database"
-        ).build()
+        )
+            .fallbackToDestructiveMigration()
+            .build()
     }
 
     @Provides

@@ -19,7 +19,10 @@ import me.coweery.fitnessnotes.data.trainings.Training
 )
 data class Exercise(
     @PrimaryKey
-    val id: Long,
+    val id: Long? = null,
     val name: String,
-    val trainingId: Long
+    val trainingId: Long,
+    val weight : Float,
+    val count : Int,
+    val sets : Int
 )
