@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
+import android.widget.HorizontalScrollView
 import android.widget.TextView
 import me.coweery.fitnessnotes.R
-import me.coweery.fitnessnotes.data.exercises.Exercise
+import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
 
 
 class ExercisesListAdapter(
@@ -16,7 +17,7 @@ class ExercisesListAdapter(
 
 
     public val exercises = mutableListOf<Exercise>()
-    private val inflater = LayoutInflater.from(context);
+    private val inflater = LayoutInflater.from(context)
 
     override fun getView(index: Int, convertView: View?, parent: ViewGroup): View {
 
@@ -28,7 +29,8 @@ class ExercisesListAdapter(
                 view.findViewById(R.id.tv_name),
                 view.findViewById(R.id.tv_count),
                 view.findViewById(R.id.tv_weight),
-                view.findViewById(R.id.tv_sets)
+                view.findViewById(R.id.tv_sets),
+                view.findViewById(R.id.hsv_aproaches)
             ).apply {
                 view.tag = this
             }
@@ -46,6 +48,7 @@ class ExercisesListAdapter(
         viewHolder.tvCount.text = exercises[index].count.toString()
         viewHolder.tvSets.text = exercises[index].sets.toString()
 
+
         return view
     }
 
@@ -61,6 +64,7 @@ class ExercisesListAdapter(
         val tvName: TextView,
         val tvCount: TextView,
         val tvWeight: TextView,
-        val tvSets: TextView
+        val tvSets: TextView,
+        val hsvAproaches : HorizontalScrollView
     )
 }

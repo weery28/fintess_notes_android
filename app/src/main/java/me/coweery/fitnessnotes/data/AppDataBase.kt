@@ -2,8 +2,8 @@ package me.coweery.fitnessnotes.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import me.coweery.fitnessnotes.data.exercises.Exercise
-import me.coweery.fitnessnotes.data.exercises.ExercisesDAO
+import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
+import me.coweery.fitnessnotes.data.trainings.exercises.ExercisesDAO
 import me.coweery.fitnessnotes.data.trainings.Training
 import me.coweery.fitnessnotes.data.trainings.TrainingsDAO
 

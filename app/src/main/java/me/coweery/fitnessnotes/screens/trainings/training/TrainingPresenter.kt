@@ -2,8 +2,8 @@ package me.coweery.fitnessnotes.screens.trainings.training
 
 import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
-import me.coweery.fitnessnotes.data.exercises.Exercise
-import me.coweery.fitnessnotes.data.exercises.ExercisesService
+import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
+import me.coweery.fitnessnotes.data.trainings.exercises.ExercisesService
 import me.coweery.fitnessnotes.data.trainings.Training
 import me.coweery.fitnessnotes.data.trainings.TrainingsService
 import me.coweery.fitnessnotes.screens.BasePresenter

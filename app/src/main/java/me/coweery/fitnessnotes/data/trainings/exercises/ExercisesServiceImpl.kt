@@ -1,4 +1,4 @@
-package me.coweery.fitnessnotes.data.exercises
+package me.coweery.fitnessnotes.data.trainings.exercises
 
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers

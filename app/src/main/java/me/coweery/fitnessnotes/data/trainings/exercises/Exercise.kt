@@ -1,4 +1,4 @@
-package me.coweery.fitnessnotes.data.exercises
+package me.coweery.fitnessnotes.data.trainings.exercises
 
 import androidx.room.Entity
 import androidx.room.ForeignKey

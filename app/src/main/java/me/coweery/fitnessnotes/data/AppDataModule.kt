@@ -4,9 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
-import me.coweery.fitnessnotes.data.exercises.ExercisesDAO
-import me.coweery.fitnessnotes.data.exercises.ExercisesService
-import me.coweery.fitnessnotes.data.exercises.ExercisesServiceImpl
+import me.coweery.fitnessnotes.data.trainings.exercises.ExercisesDAO
+import me.coweery.fitnessnotes.data.trainings.exercises.ExercisesService
+import me.coweery.fitnessnotes.data.trainings.exercises.ExercisesServiceImpl
 import me.coweery.fitnessnotes.data.login.*
 import me.coweery.fitnessnotes.data.registration.RegistrationResource
 import me.coweery.fitnessnotes.data.registration.RegistrationService

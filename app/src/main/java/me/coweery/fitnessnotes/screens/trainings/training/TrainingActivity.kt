@@ -8,11 +8,10 @@ import android.widget.Button
 import android.widget.ListView
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import io.reactivex.Observable
 import io.reactivex.Single
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
-import me.coweery.fitnessnotes.data.exercises.Exercise
+import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
 import me.coweery.fitnessnotes.screens.BaseActivity
 import me.coweery.fitnessnotes.screens.trainings.IntentKey
 import me.coweery.fitnessnotes.screens.trainings.training.input.InputExerciseFragment
@@ -122,5 +121,9 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         menuInflater.inflate(R.menu.menu_edit, menu)
         addExerciseButton.visibility = View.GONE
         startTrainingButton.visibility = View.VISIBLE
+    }
+
+    override fun showTrainingScreen() {
+
     }
 }

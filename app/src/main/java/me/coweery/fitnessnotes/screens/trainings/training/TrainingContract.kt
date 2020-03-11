@@ -1,6 +1,6 @@
 package me.coweery.fitnessnotes.screens.trainings.training
 
-import me.coweery.fitnessnotes.data.exercises.Exercise
+import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
 import me.coweery.fitnessnotes.screens.MvpContract
 
 interface TrainingContract {
@@ -14,6 +14,8 @@ interface TrainingContract {
         fun showEditScreen()
 
         fun showPreparedTrainingScreen()
+
+        fun showTrainingScreen()
     }
 
     interface Presenter : MvpContract.Presenter<View> {
@@ -32,6 +34,8 @@ interface TrainingContract {
             count : Int,
             sets : Int
         )
+
+        fun onStartTrainingClicked()
     }
 
     interface Output {
