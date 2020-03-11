@@ -3,6 +3,8 @@ package me.coweery.fitnessnotes.screens.trainings.training
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
 import android.widget.ListView
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -27,6 +29,9 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
 
     private val exercisesList by lazy { findViewById<ListView>(R.id.lv_trainings_list) }
     private val addExerciseButton by lazy { findViewById<FloatingActionButton>(R.id.fab_add) }
+    private val startTrainingButton by lazy { findViewById<Button>(R.id.btn_start) }
+    private var trainigId : Long? = null
+    private var menu : Menu? = null
 
 
     private lateinit var adapter : ExercisesListAdapter
@@ -37,21 +42,32 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 
-        menuInflater.inflate(R.menu.menu_ok, menu)
+        this.menu = menu
+
+        if (trainigId == null){
+            menuInflater.inflate(R.menu.menu_ok, menu)
+        } else {
+            menuInflater.inflate(R.menu.menu_edit, menu)
+        }
+
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
-        if (item.itemId == R.id.action_ok){
-            presenter.onEditingDone()
+        when(item.itemId){
+            R.id.action_ok -> presenter.onEditingDone()
+            R.id.action_edit -> presenter.onEditClicked()
+            else -> return super.onOptionsItemSelected(item)
         }
-        return super.onOptionsItemSelected(item)
+        return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_with_list_toolbar_and_add_button)
+        setContentView(R.layout.activity_training)
+        trainigId = intent.extras?.getLong(IntentKey.TRAINING_ID)
         setupToolbar()
         adapter = ExercisesListAdapter(this)
         addExerciseButton.setOnClickListener {
@@ -64,11 +80,19 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         }
         input = InputExerciseFragment(this)
         exercisesList.adapter = adapter
+
+        if (trainigId != null){
+            addExerciseButton.visibility = View.GONE
+        } else {
+            startTrainingButton.visibility = View.GONE
+        }
     }
 
     override fun onResume() {
+
         super.onResume()
-        intent.extras?.getLong(IntentKey.TRAINING_ID)?.let(presenter::onTrainingReceived)
+        trainigId?.let { presenter.onTrainingReceived(it) }
+
     }
 
     override fun addExercise(exercise: Exercise) {
@@ -81,11 +105,22 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         input.show(supportFragmentManager, "input")
     }
 
-    override fun closeScreen() {
-        finish()
-    }
-
     override fun onDataReceived(name: String, weight: Float, count: Int, sets: Int) {
         presenter.onExercisesDataReceived(name, weight, count, sets)
+    }
+
+    override fun showEditScreen() {
+        menu?.clear()
+        menuInflater.inflate(R.menu.menu_ok, menu)
+        addExerciseButton.visibility = View.VISIBLE
+        startTrainingButton.visibility = View.GONE
+    }
+
+    override fun showPreparedTrainingScreen() {
+
+        menu?.clear()
+        menuInflater.inflate(R.menu.menu_edit, menu)
+        addExerciseButton.visibility = View.GONE
+        startTrainingButton.visibility = View.VISIBLE
     }
 }

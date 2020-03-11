@@ -52,7 +52,7 @@ class TrainingPresenter @Inject constructor(
     }
 
     override fun onEditingDone() {
-        view?.closeScreen()
+        view?.showPreparedTrainingScreen()
     }
 
     override fun onTrainingReceived(trainingId: Long) {
@@ -75,5 +75,9 @@ class TrainingPresenter @Inject constructor(
                     it.printStackTrace()
                 }
             )
+    }
+
+    override fun onEditClicked() {
+        view?.showEditScreen()
     }
 }
