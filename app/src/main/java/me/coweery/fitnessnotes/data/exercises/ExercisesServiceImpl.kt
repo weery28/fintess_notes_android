@@ -15,8 +15,13 @@ class ExercisesServiceImpl @Inject constructor(
         return exercisesDAO.insert(exercise)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .zipWith(Single.just(exercise)) { id, ex ->
-                Exercise(id, ex.name, ex.trainingId, ex.weight, ex.count, ex.sets)
-            }
+            .zipWith(Single.just(exercise)) { id, ex -> ex.copy(id = id) }
+    }
+
+    override fun getByTrainingId(id: Long): Single<List<Exercise>> {
+
+        return exercisesDAO.getByTrainingId(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 }

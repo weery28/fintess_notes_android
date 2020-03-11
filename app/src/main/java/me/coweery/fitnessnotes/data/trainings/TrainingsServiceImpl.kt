@@ -14,35 +14,23 @@ class TrainingsServiceImpl @Inject constructor(
 
     override fun getAll(): Single<List<Training>> {
 
-        return trainingsDAO.count()
+        return trainingsDAO.getAll()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .flatMap {
-                if (it == 0L) {
-                    Observable.fromIterable(0..10)
-                        .flatMapCompletable {
-                            trainingsDAO.insert(
-                                Training(it.toLong(), "Тренировка $it", Random.nextBoolean())
-                            )
-                                .subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                        }
-                        .andThen(
-                            trainingsDAO.getAll().subscribeOn(Schedulers.io())
-                                .observeOn(AndroidSchedulers.mainThread())
-                        )
-                } else {
-                    trainingsDAO.getAll()
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                }
-            }
     }
 
-    override fun save(training: Training): Completable {
+    override fun save(training: Training): Single<Long> {
         return trainingsDAO
             .insert(training)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun get(id: Long): Single<Training> {
+
+        return trainingsDAO.get(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .toSingle()
     }
 }

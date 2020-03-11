@@ -5,6 +5,8 @@ import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import me.coweery.fitnessnotes.data.exercises.ExercisesDAO
+import me.coweery.fitnessnotes.data.exercises.ExercisesService
+import me.coweery.fitnessnotes.data.exercises.ExercisesServiceImpl
 import me.coweery.fitnessnotes.data.login.*
 import me.coweery.fitnessnotes.data.registration.RegistrationResource
 import me.coweery.fitnessnotes.data.registration.RegistrationService
@@ -66,6 +68,34 @@ class AppDataModule {
         return trainingsServiceImpl
     }
 
+    @Provides
+    @Singleton
+    fun provideTrainingsDao(appDatabase: AppDataBase): TrainingsDAO {
+
+        return appDatabase.trainingsDAO
+    }
+
+    //endregion
+
+
+    //region ==================== Exercises ====================
+
+
+    @Provides
+    @Singleton
+    fun provideExercisesDao(appDatabase: AppDataBase): ExercisesDAO {
+
+        return appDatabase.exercisesDAO
+    }
+
+    @Provides
+    @Singleton
+    fun provideExercisesService(exercisesService: ExercisesServiceImpl): ExercisesService {
+
+        return exercisesService
+    }
+
+
     //endregion
 
     //region ==================== Room ====================
@@ -80,20 +110,6 @@ class AppDataModule {
         )
             .fallbackToDestructiveMigration()
             .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideTrainingsDao(appDatabase: AppDataBase): TrainingsDAO {
-
-        return appDatabase.trainingsDAO
-    }
-
-    @Provides
-    @Singleton
-    fun provideExercisesDao(appDatabase: AppDataBase): ExercisesDAO {
-
-        return appDatabase.exercisesDAO
     }
 
     //endregion

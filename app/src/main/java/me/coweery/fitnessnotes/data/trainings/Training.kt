@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-class Training(
+data class Training(
     @PrimaryKey
     val id: Long? = null,
     val name: String,

@@ -55,7 +55,7 @@ class InputExerciseFragment(
                 etCount.text.toString().toInt(),
                 etSets.text.toString().toInt()
             )
-            dismiss()
+            dismissAllowingStateLoss()
         }
     }
 }

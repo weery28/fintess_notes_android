@@ -5,16 +5,29 @@ import me.coweery.fitnessnotes.screens.MvpContract
 
 interface TrainingContract {
 
-    interface View : MvpContract.View {
+    interface View : MvpContract.View, Output {
 
         fun addExercise(exercise: Exercise)
 
         fun showExerciseInput()
+
+        fun closeScreen()
     }
 
-    interface Presenter : MvpContract.Presenter<View>, Output {
+    interface Presenter : MvpContract.Presenter<View> {
 
         fun onAddExercisesClicked()
+
+        fun onEditingDone()
+
+        fun onTrainingReceived(trainingId : Long)
+
+        fun onExercisesDataReceived(
+            name : String,
+            weight : Float,
+            count : Int,
+            sets : Int
+        )
     }
 
     interface Output {

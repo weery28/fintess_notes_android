@@ -9,6 +9,7 @@ import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
 import me.coweery.fitnessnotes.data.trainings.Training
 import me.coweery.fitnessnotes.screens.BaseActivity
+import me.coweery.fitnessnotes.screens.trainings.IntentKey
 import me.coweery.fitnessnotes.screens.trainings.list.adapter.TrainingsListAdapter
 import me.coweery.fitnessnotes.screens.trainings.training.TrainingActivity
 import javax.inject.Inject
@@ -35,8 +36,11 @@ class TrainingsListActivity :
         addTrainingButton.setOnClickListener {
             presenter.onAddTrainingClicked()
         }
-        adapter = TrainingsListAdapter(this)
+        adapter = TrainingsListAdapter(this){
+            presenter.onTrainingClicked(it.id!!)
+        }
         trainingsList.adapter = adapter
+
     }
 
     override fun onResume() {
@@ -52,6 +56,15 @@ class TrainingsListActivity :
     }
 
     override fun showCreateTrainingScreen() {
-        startActivity(Intent(this, TrainingActivity::class.java))
+        startActivity(
+            Intent(this, TrainingActivity::class.java)
+        )
+    }
+
+    override fun showEditTrainingScreen(id: Long) {
+        startActivity(
+            Intent(this, TrainingActivity::class.java)
+                .putExtra(IntentKey.TRAINING_ID, id)
+        )
     }
 }
