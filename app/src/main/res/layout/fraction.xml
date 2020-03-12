@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="34dp"
     android:layout_height="match_parent">
@@ -9,10 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_centerInParent="true"
-        android:background="@color/brown_grey">
-    </View>
+        android:background="@color/brown_grey"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,10 +20,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
         android:textColor="@android:color/white"
-        android:textSize="18dp"
+        app:autoSizeMaxTextSize="20dp"
+        app:autoSizeMinTextSize="12dp"
+        app:autoSizeStepGranularity="2dp"
+        app:autoSizeTextType="uniform"
         tools:text="150" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,6 +34,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:textColor="@android:color/white"
-        android:textSize="18dp"
+        app:autoSizeMaxTextSize="20dp"
+        app:autoSizeMinTextSize="12dp"
+        app:autoSizeStepGranularity="2dp"
+        app:autoSizeTextType="uniform"
         tools:text="10" />
 </RelativeLayout>

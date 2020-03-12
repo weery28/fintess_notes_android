@@ -6,13 +6,16 @@ import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
 import me.coweery.fitnessnotes.data.trainings.exercises.ExercisesService
 import me.coweery.fitnessnotes.data.trainings.Training
 import me.coweery.fitnessnotes.data.trainings.TrainingsService
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.SetsService
 import me.coweery.fitnessnotes.screens.BasePresenter
 import java.util.*
 import javax.inject.Inject
 
 class TrainingPresenter @Inject constructor(
     private val exercisesService: ExercisesService,
-    private val trainingsService: TrainingsService
+    private val trainingsService: TrainingsService,
+    private val setsService: SetsService
 ) : BasePresenter<TrainingContract.View>(),
     TrainingContract.Presenter {
 
@@ -95,5 +98,27 @@ class TrainingPresenter @Inject constructor(
                 {
 
                 })
+    }
+
+    override fun onSetClicked(exercise: Exercise, setIndex: Int) {
+
+        view?.showSetInput(exercise.weight, exercise.count){
+            weight, count ->
+            setsService.create(Set(
+                null,
+                exercise.id!!,
+                count,
+                weight,
+                setIndex
+            ))
+                .safetySubscribe(
+                    {
+                        view?.addSet(it)
+                    },
+                    {
+                        it.printStackTrace()
+                    }
+                )
+        }
     }
 }

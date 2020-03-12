@@ -11,7 +11,8 @@ import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
 
 class ExercisesListAdapter(
     private val context: Context,
-    private val onExecrciseDelete : (Exercise) -> Unit
+    private val onExecrciseDelete : (Exercise) -> Unit,
+    private val onSetClicked : (Exercise, Int) -> Unit
 ) : BaseAdapter() {
 
 
@@ -31,7 +32,6 @@ class ExercisesListAdapter(
                 view.findViewById(R.id.tv_weight),
                 view.findViewById(R.id.tv_sets),
                 view.findViewById(R.id.ll_aproaches),
-                view.findViewById(R.id.btn_edit),
                 view.findViewById(R.id.btn_delete)
             ).apply {
                 view.tag = this
@@ -55,20 +55,22 @@ class ExercisesListAdapter(
         }
 
         if (isActiveState) {
-            viewHolder.btnDelete.visibility = View.GONE
-            viewHolder.btnEdit.visibility = View.GONE
             if (viewHolder.llSets.childCount != exercises[index].sets){
                 viewHolder.llSets.removeAllViews()
                 (0 until exercises[index].sets).forEach {
-                    viewHolder.llSets.addView(
-                        inflater.inflate(R.layout.fraction, viewHolder.llSets, false)
-                    )
+                    val fractionView = inflater.inflate(R.layout.fraction, viewHolder.llSets, false)
+                    viewHolder.llSets.addView(fractionView)
+                    val layoutParams = fractionView.layoutParams as LinearLayout.LayoutParams
+                    layoutParams.weight = 1f
+                    layoutParams.width = 0
+                    fractionView.layoutParams = layoutParams
+                    fractionView.setOnClickListener { _ ->
+                        onSetClicked(exercises[index], it)
+                    }
                 }
             }
         } else {
             viewHolder.llSets.removeAllViews()
-            viewHolder.btnDelete.visibility = View.VISIBLE
-            viewHolder.btnEdit.visibility = View.VISIBLE
         }
 
         return view
@@ -82,6 +84,7 @@ class ExercisesListAdapter(
 
     fun add(exercise: Exercise) {
         exercises.add(exercise)
+        exercises.sortBy { it.id }
         notifyDataSetChanged()
     }
 
@@ -106,7 +109,6 @@ class ExercisesListAdapter(
         val tvWeight: TextView,
         val tvSets: TextView,
         val llSets: LinearLayout,
-        val btnEdit: ImageView,
         val btnDelete: ImageView
     )
 }

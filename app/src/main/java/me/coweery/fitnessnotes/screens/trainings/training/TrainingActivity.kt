@@ -12,6 +12,7 @@ import io.reactivex.Single
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
 import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 import me.coweery.fitnessnotes.screens.BaseActivity
 import me.coweery.fitnessnotes.screens.trainings.IntentKey
 import me.coweery.fitnessnotes.screens.trainings.training.input.InputExerciseFragment
@@ -43,7 +44,11 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         setContentView(R.layout.activity_training)
         trainigId = intent.extras?.getLong(IntentKey.TRAINING_ID)
         setupToolbar()
-        adapter = ExercisesListAdapter(this, presenter::onExerciseDeleteClicked)
+        adapter = ExercisesListAdapter(
+            this,
+            presenter::onExerciseDeleteClicked,
+            presenter::onSetClicked
+        )
         addExerciseButton.setOnClickListener {
             addExerciseButton.isClickable = false
             Single.timer(1, TimeUnit.SECONDS)
@@ -87,5 +92,17 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
     override fun showStoppedTrainingScreen() {
         startTrainingButton.setImageResource(R.drawable.baseline_play_arrow_24)
         adapter.toStoppedState()
+    }
+
+    override fun showSetInput(
+        defaultWeight: Float,
+        defaultCount: Int,
+        result: (Float, Int) -> Unit
+    ) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun addSet(set: Set) {
+        adapter.
     }
 }

@@ -1,6 +1,7 @@
 package me.coweery.fitnessnotes.screens.trainings.training
 
 import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 import me.coweery.fitnessnotes.screens.MvpContract
 
 interface TrainingContract {
@@ -16,6 +17,10 @@ interface TrainingContract {
         fun showStoppedTrainingScreen()
 
         fun deleteExercise(id : Long)
+
+        fun showSetInput(defaultWeight : Float, defaultCount : Int, result : (Float, Int) -> Unit)
+
+        fun addSet(set : Set)
     }
 
     interface Presenter : MvpContract.Presenter<View> {
@@ -34,6 +39,8 @@ interface TrainingContract {
         fun onStartTrainingClicked()
 
         fun onExerciseDeleteClicked(exercise: Exercise)
+
+        fun onSetClicked(exercise: Exercise, setIndex : Int)
     }
 
     interface Output {

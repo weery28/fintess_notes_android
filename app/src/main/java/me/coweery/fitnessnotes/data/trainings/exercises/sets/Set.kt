@@ -23,5 +23,6 @@ data class Set(
     val id: Long? = null,
     val exerciseId: Long,
     val repsCount: Int,
-    val weight: Float
+    val weight: Float,
+    val index : Int
 )
