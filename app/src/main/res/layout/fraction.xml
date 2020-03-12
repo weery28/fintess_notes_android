@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_centerInParent="true"
-        android:background="@color/brown_grey"></View>
+        android:background="@color/brown_grey">
+    </View>
 
     <TextView
         android:id="@+id/tv_weight"

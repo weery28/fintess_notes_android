@@ -1,5 +1,6 @@
 package me.coweery.fitnessnotes.data.trainings.exercises
 
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.zipWith
@@ -21,6 +22,13 @@ class ExercisesServiceImpl @Inject constructor(
     override fun getByTrainingId(id: Long): Single<List<Exercise>> {
 
         return exercisesDAO.getByTrainingId(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun delete(id: Long): Completable {
+
+        return exercisesDAO.delete(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

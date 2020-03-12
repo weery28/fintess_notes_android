@@ -31,9 +31,38 @@
         android:textSize="18dp"
         tools:text="4" />
 
-    <HorizontalScrollView
-        android:id="@+id/hsv_aproaches"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/ll_aproaches"
+            android:divider="@drawable/transparent_divider"
+            android:orientation="horizontal"
+            android:showDividers="middle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="48dp"
+            android:layout_gravity="end"
+            android:src="@drawable/baseline_delete_24"
+            android:scaleType="center"
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_red_light"/>
+
+        <ImageView
+            android:id="@+id/btn_edit"
+            android:layout_width="48dp"
+            android:layout_gravity="end"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="48dp"
+            android:src="@drawable/baseline_edit_24"
+            android:scaleType="center"
+            android:background="@android:color/holo_orange_light"/>
+
+
+    </FrameLayout>
 
 </LinearLayout>

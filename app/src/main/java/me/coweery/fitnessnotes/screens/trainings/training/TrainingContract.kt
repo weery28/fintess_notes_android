@@ -11,20 +11,16 @@ interface TrainingContract {
 
         fun showExerciseInput()
 
-        fun showEditScreen()
+        fun showActiveTrainingScreen()
 
-        fun showPreparedTrainingScreen()
+        fun showStoppedTrainingScreen()
 
-        fun showTrainingScreen()
+        fun deleteExercise(id : Long)
     }
 
     interface Presenter : MvpContract.Presenter<View> {
 
         fun onAddExercisesClicked()
-
-        fun onEditingDone()
-
-        fun onEditClicked()
 
         fun onTrainingReceived(trainingId : Long)
 
@@ -36,6 +32,8 @@ interface TrainingContract {
         )
 
         fun onStartTrainingClicked()
+
+        fun onExerciseDeleteClicked(exercise: Exercise)
     }
 
     interface Output {

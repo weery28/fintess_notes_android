@@ -17,6 +17,7 @@ class TrainingPresenter @Inject constructor(
     TrainingContract.Presenter {
 
     private var mTraining: Training? = null
+    private var state : TrainingState = TrainingState.STOPPED
 
     override fun onAddExercisesClicked() {
         view?.showExerciseInput()
@@ -51,10 +52,6 @@ class TrainingPresenter @Inject constructor(
             )
     }
 
-    override fun onEditingDone() {
-        view?.showPreparedTrainingScreen()
-    }
-
     override fun onTrainingReceived(trainingId: Long) {
 
         trainingsService.get(trainingId)
@@ -77,7 +74,26 @@ class TrainingPresenter @Inject constructor(
             )
     }
 
-    override fun onEditClicked() {
-        view?.showEditScreen()
+    override fun onStartTrainingClicked() {
+        if (state == TrainingState.ACTIVE){
+            state = TrainingState.STOPPED
+            view?.showStoppedTrainingScreen()
+        } else {
+            state = TrainingState.ACTIVE
+            view?.showActiveTrainingScreen()
+        }
+
+    }
+
+    override fun onExerciseDeleteClicked(exercise: Exercise) {
+
+        exercisesService.delete(exercise.id!!)
+            .safetySubscribe(
+                {
+                    view?.deleteExercise(exercise.id)
+                },
+                {
+
+                })
     }
 }

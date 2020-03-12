@@ -28,38 +28,13 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
 
     private val exercisesList by lazy { findViewById<ListView>(R.id.lv_trainings_list) }
     private val addExerciseButton by lazy { findViewById<FloatingActionButton>(R.id.fab_add) }
-    private val startTrainingButton by lazy { findViewById<Button>(R.id.btn_start) }
+    private val startTrainingButton by lazy { findViewById<FloatingActionButton>(R.id.btn_start) }
     private var trainigId : Long? = null
-    private var menu : Menu? = null
-
 
     private lateinit var adapter : ExercisesListAdapter
 
     override fun setupDI() {
         AppContext.appComponent.trainingScreenComponent().inject(this)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-
-        this.menu = menu
-
-        if (trainigId == null){
-            menuInflater.inflate(R.menu.menu_ok, menu)
-        } else {
-            menuInflater.inflate(R.menu.menu_edit, menu)
-        }
-
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        when(item.itemId){
-            R.id.action_ok -> presenter.onEditingDone()
-            R.id.action_edit -> presenter.onEditClicked()
-            else -> return super.onOptionsItemSelected(item)
-        }
-        return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,7 +43,7 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         setContentView(R.layout.activity_training)
         trainigId = intent.extras?.getLong(IntentKey.TRAINING_ID)
         setupToolbar()
-        adapter = ExercisesListAdapter(this)
+        adapter = ExercisesListAdapter(this, presenter::onExerciseDeleteClicked)
         addExerciseButton.setOnClickListener {
             addExerciseButton.isClickable = false
             Single.timer(1, TimeUnit.SECONDS)
@@ -80,24 +55,20 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         input = InputExerciseFragment(this)
         exercisesList.adapter = adapter
 
-        if (trainigId != null){
-            addExerciseButton.visibility = View.GONE
-        } else {
-            startTrainingButton.visibility = View.GONE
+        startTrainingButton.setOnClickListener {
+            presenter.onStartTrainingClicked()
         }
-    }
 
-    override fun onResume() {
-
-        super.onResume()
         trainigId?.let { presenter.onTrainingReceived(it) }
-
     }
+
 
     override fun addExercise(exercise: Exercise) {
+        adapter.add(exercise)
+    }
 
-        adapter.exercises.add(exercise)
-        adapter.notifyDataSetChanged()
+    override fun deleteExercise(id: Long) {
+        adapter.delete(id)
     }
 
     override fun showExerciseInput() {
@@ -108,22 +79,13 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         presenter.onExercisesDataReceived(name, weight, count, sets)
     }
 
-    override fun showEditScreen() {
-        menu?.clear()
-        menuInflater.inflate(R.menu.menu_ok, menu)
-        addExerciseButton.visibility = View.VISIBLE
-        startTrainingButton.visibility = View.GONE
+    override fun showActiveTrainingScreen() {
+        startTrainingButton.setImageResource(R.drawable.baseline_stop_24)
+        adapter.toActiveState()
     }
 
-    override fun showPreparedTrainingScreen() {
-
-        menu?.clear()
-        menuInflater.inflate(R.menu.menu_edit, menu)
-        addExerciseButton.visibility = View.GONE
-        startTrainingButton.visibility = View.VISIBLE
-    }
-
-    override fun showTrainingScreen() {
-
+    override fun showStoppedTrainingScreen() {
+        startTrainingButton.setImageResource(R.drawable.baseline_play_arrow_24)
+        adapter.toStoppedState()
     }
 }
