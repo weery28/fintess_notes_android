@@ -22,7 +22,7 @@ class InputSetFragment(
     private lateinit var etCount: EditText
     private lateinit var btnSave: Button
 
-    private lateinit var set: Set
+    private lateinit var set: SetInputContext
 
 
     override fun onCreateView(
@@ -49,7 +49,7 @@ class InputSetFragment(
         etCount = view.findViewById(R.id.et_count)
         btnSave = view.findViewById(R.id.btn_save)
 
-        set = arguments?.getSerializable("set") as Set
+        set = arguments?.getSerializable("set") as SetInputContext
         btnSave.setOnClickListener {
             output.onSetDataReceived(
                  set.copy(
@@ -63,7 +63,7 @@ class InputSetFragment(
 
     override fun onResume() {
         super.onResume()
-        etWeight.setText(arguments!!.getString("weight"))
-        etCount.setText(arguments!!.getString("count"))
+        etWeight.setText(set.weight?.toString())
+        etCount.setText(set.repsCount?.toString())
     }
 }

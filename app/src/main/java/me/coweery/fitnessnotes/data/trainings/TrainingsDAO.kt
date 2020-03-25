@@ -15,9 +15,6 @@ interface TrainingsDAO {
     @Query("SELECT * FROM training")
     fun getAll(): Single<List<Training>>
 
-    @Query("SELECT count(id) FROM training")
-    fun count(): Single<Long>
-
     @Query("SELECT * FROM training WHERE id =:id")
     fun get(id: Long): Maybe<Training>
 

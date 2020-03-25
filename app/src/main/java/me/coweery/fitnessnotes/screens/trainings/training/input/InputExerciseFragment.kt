@@ -23,7 +23,7 @@ class InputExerciseFragment(
     private lateinit var etSets: EditText
     private lateinit var btnSave: Button
 
-    private lateinit var exercise: Exercise
+    private lateinit var exercise: ExerciseInputContext
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,7 +51,7 @@ class InputExerciseFragment(
         etSets = view.findViewById(R.id.et_sets)
         btnSave = view.findViewById(R.id.btn_save)
 
-        exercise = arguments?.getSerializable("exercise") as Exercise
+        exercise = arguments?.getSerializable("exercise") as ExerciseInputContext
         btnSave.setOnClickListener {
             exercisesOutput.onDataReceived(
                 exercise.copy(

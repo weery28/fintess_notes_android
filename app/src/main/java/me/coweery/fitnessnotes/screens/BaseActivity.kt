@@ -31,14 +31,16 @@ abstract class BaseActivity<S : MvpContract.View, T : MvpContract.Presenter<S>> 
 
     abstract fun setupDI()
 
-    protected fun setupToolbar(){
+    protected fun setupToolbar(title : String? = null){
 
         setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent))
         toolbar.apply {
             setBackgroundColor(Color.TRANSPARENT)
             setSupportActionBar(this)
-            supportActionBar?.title = null
             supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            title?.let {
+                supportActionBar?.title = it
+            }
         }
 
         setBackArrowColor(ContextCompat.getColor(this, android.R.color.white))

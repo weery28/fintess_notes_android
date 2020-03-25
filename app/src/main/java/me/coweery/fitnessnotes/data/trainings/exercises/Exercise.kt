@@ -21,9 +21,9 @@ import java.io.Serializable
 data class Exercise(
     @PrimaryKey
     val id: Long? = null,
-    val name: String?,
-    val trainingId: Long?,
-    val weight : Float?,
-    val count : Int?,
-    val sets : Int?
+    val name: String,
+    val trainingId: Long,
+    val weight : Float,
+    val count : Int,
+    val sets : Int
 ) : Serializable

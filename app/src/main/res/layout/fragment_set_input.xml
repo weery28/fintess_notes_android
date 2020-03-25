@@ -12,7 +12,7 @@
         android:layout_margin="@dimen/side_margin"
         android:backgroundTint="@color/brown_grey"
         android:hint="@string/weight"
-        android:inputType="number"
+        android:inputType="numberDecimal"
         android:textSize="20dp" />
 
     <EditText

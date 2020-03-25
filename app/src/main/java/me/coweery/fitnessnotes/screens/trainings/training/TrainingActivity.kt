@@ -11,8 +11,10 @@ import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
 import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 import me.coweery.fitnessnotes.screens.BaseActivity
 import me.coweery.fitnessnotes.screens.trainings.IntentKey
+import me.coweery.fitnessnotes.screens.trainings.training.input.ExerciseInputContext
 import me.coweery.fitnessnotes.screens.trainings.training.input.InputExerciseFragment
 import me.coweery.fitnessnotes.screens.trainings.training.input.InputSetFragment
+import me.coweery.fitnessnotes.screens.trainings.training.input.SetInputContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -40,7 +42,7 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_training)
         trainigId = intent.extras?.getLong(IntentKey.TRAINING_ID)
-        setupToolbar()
+        setupToolbar(getString(R.string.training))
         adapter = ExercisesListAdapter(
             this,
             presenter::onExerciseDeleteClicked,
@@ -71,25 +73,25 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         adapter.delete(id)
     }
 
-    override fun onDataReceived(exercise: Exercise) {
-        presenter.onExercisesDataReceived(exercise)
+    override fun onDataReceived(exerciseInputContext: ExerciseInputContext) {
+        presenter.onExercisesDataReceived(exerciseInputContext)
     }
 
-    override fun showExerciseInput(exercise: Exercise) {
+    override fun showExerciseInput(exerciseInputContext: ExerciseInputContext) {
         input.arguments = Bundle().apply {
-            putSerializable("exercise", exercise)
+            putSerializable("exercise", exerciseInputContext)
         }
         input.show(supportFragmentManager, "setInput")
     }
 
-    override fun onSetDataReceived(set: Set) {
-        presenter.onSetDataReceived(set)
+    override fun onSetDataReceived(setInputContext: SetInputContext) {
+        presenter.onSetDataReceived(setInputContext)
     }
 
-    override fun showSetInput(set: Set) {
+    override fun showSetInput(setInputContext: SetInputContext) {
 
         setsInput.arguments = Bundle().apply {
-            putSerializable("set", set)
+            putSerializable("set", setInputContext)
         }
         setsInput.show(supportFragmentManager, "setInput")
 

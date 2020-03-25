@@ -16,4 +16,5 @@
     <string name="count">Повторов</string>
     <string name="exercise_name">Название упражнения</string>
     <string name="sets">Подходов</string>
+    <string name="training">Тренировка</string>
 </resources>
