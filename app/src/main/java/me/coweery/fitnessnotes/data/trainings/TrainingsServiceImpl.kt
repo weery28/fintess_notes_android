@@ -33,4 +33,12 @@ class TrainingsServiceImpl @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
             .toSingle()
     }
+
+    override fun getFullTraining(id: Long): Single<FullTraining> {
+
+        return trainingsDAO.getFullTraining(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .toSingle()
+    }
 }

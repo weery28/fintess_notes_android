@@ -20,4 +20,7 @@ interface TrainingsDAO {
 
     @Query("SELECT * FROM training WHERE id =:id")
     fun get(id: Long): Maybe<Training>
+
+    @Query("SELECT * FROM training WHERE id =:id")
+    fun getFullTraining(id: Long): Maybe<FullTraining>
 }

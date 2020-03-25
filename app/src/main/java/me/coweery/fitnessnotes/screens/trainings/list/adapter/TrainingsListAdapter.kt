@@ -26,8 +26,7 @@ class TrainingsListAdapter(
 
             view = inflater.inflate(R.layout.trainings_list_item, parent, false)
             ViewHolder(
-                view.findViewById(R.id.tv_name),
-                view.findViewById(R.id.cb_is_complete)
+                view.findViewById(R.id.tv_name)
             ).apply {
                 view.tag = this
             }
@@ -37,7 +36,6 @@ class TrainingsListAdapter(
         }
 
         viewHolder.tvName.text = trainings[index].name
-        viewHolder.cbIsComplete.isChecked = trainings[index].isComplete
 
         view.setOnClickListener {
             onItemClicked(trainings[index])
@@ -55,7 +53,6 @@ class TrainingsListAdapter(
     override fun getCount(): Int = trainings.size
 
     class ViewHolder(
-        val tvName: TextView,
-        val cbIsComplete: CheckBox
+        val tvName: TextView
     )
 }

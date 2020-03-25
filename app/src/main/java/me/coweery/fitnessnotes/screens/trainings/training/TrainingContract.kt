@@ -6,19 +6,15 @@ import me.coweery.fitnessnotes.screens.MvpContract
 
 interface TrainingContract {
 
-    interface View : MvpContract.View, Output {
+    interface View : MvpContract.View, ExercisesOutput, SetsOutput {
 
         fun addExercise(exercise: Exercise)
 
-        fun showExerciseInput()
-
-        fun showActiveTrainingScreen()
-
-        fun showStoppedTrainingScreen()
+        fun showExerciseInput(exercise: Exercise)
 
         fun deleteExercise(id : Long)
 
-        fun showSetInput(defaultWeight : Float, defaultCount : Int, result : (Float, Int) -> Unit)
+        fun showSetInput(set : Set)
 
         fun addSet(set : Set)
     }
@@ -29,27 +25,24 @@ interface TrainingContract {
 
         fun onTrainingReceived(trainingId : Long)
 
-        fun onExercisesDataReceived(
-            name : String,
-            weight : Float,
-            count : Int,
-            sets : Int
-        )
+        fun onExercisesDataReceived(exercise: Exercise)
 
-        fun onStartTrainingClicked()
+        fun onSetDataReceived(set : Set)
 
         fun onExerciseDeleteClicked(exercise: Exercise)
 
-        fun onSetClicked(exercise: Exercise, setIndex : Int)
+        fun onExerciseEditClicked(exercise: Exercise)
+
+        fun onSetClicked(exercise: Exercise, set : Set?, setIndex : Int)
     }
 
-    interface Output {
+    interface ExercisesOutput {
 
-        fun onDataReceived(
-            name : String,
-            weight : Float,
-            count : Int,
-            sets : Int
-        )
+        fun onDataReceived(exercise: Exercise)
+    }
+
+    interface SetsOutput {
+
+        fun onSetDataReceived(set : Set)
     }
 }

@@ -11,14 +11,28 @@ class SetsServiceImpl @Inject constructor(
 ) : SetsService {
 
 
-    override fun create(set: Set): Single<Set> {
+    override fun createOrUpdate(set: Set): Single<Set> {
 
-        return setsDAO.insert(set)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .zipWith(Single.just(set)){
-                id, s -> s.copy(id = id)
+        return setsDAO.update(set)
+            .flatMap {
+                if (it == 0){
+                    setsDAO.insert(set)
+                        .zipWith(Single.just(set)){
+                                id, s -> s.copy(id = id)
+                        }
+                } else {
+                    Single.just(set)
+                }
             }
 
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getByExerciseId(exerciseId: Long): Single<List<Set>> {
+
+        return setsDAO.getByExerciseId(exerciseId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 }

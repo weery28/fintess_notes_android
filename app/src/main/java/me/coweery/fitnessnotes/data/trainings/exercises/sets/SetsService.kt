@@ -4,5 +4,7 @@ import io.reactivex.Single
 
 interface SetsService {
 
-    fun create(set: Set): Single<Set>
+    fun createOrUpdate(set: Set): Single<Set>
+
+    fun getByExerciseId(exerciseId : Long) : Single<List<Set>>
 }

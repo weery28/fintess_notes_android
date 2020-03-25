@@ -7,16 +7,4 @@
 
     <include layout="@layout/activity_with_list_toolbar_and_add_button" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btn_start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="88dp"
-        android:layout_marginEnd="@dimen/side_margin"
-        android:src="@drawable/baseline_play_arrow_24"
-        android:backgroundTint="@android:color/holo_green_light"
-        android:text="Старт" />
-
-
 </FrameLayout>

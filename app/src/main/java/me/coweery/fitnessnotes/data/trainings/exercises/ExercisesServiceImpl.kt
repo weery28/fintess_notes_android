@@ -32,4 +32,11 @@ class ExercisesServiceImpl @Inject constructor(
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
+
+    override fun update(exercise: Exercise): Completable {
+
+        return exercisesDAO.update(exercise)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
 }

@@ -5,6 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
+import java.io.Serializable
 
 @Entity(
     foreignKeys = arrayOf(
@@ -18,11 +19,10 @@ import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
     indices = arrayOf(Index("exerciseId"))
 )
 data class Set(
-
     @PrimaryKey
     val id: Long? = null,
     val exerciseId: Long,
     val repsCount: Int,
     val weight: Float,
     val index : Int
-)
+) : Serializable

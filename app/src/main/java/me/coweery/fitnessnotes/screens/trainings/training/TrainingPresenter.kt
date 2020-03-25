@@ -1,5 +1,6 @@
 package me.coweery.fitnessnotes.screens.trainings.training
 
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.rxkotlin.zipWith
 import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
@@ -9,6 +10,7 @@ import me.coweery.fitnessnotes.data.trainings.TrainingsService
 import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 import me.coweery.fitnessnotes.data.trainings.exercises.sets.SetsService
 import me.coweery.fitnessnotes.screens.BasePresenter
+import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -19,17 +21,20 @@ class TrainingPresenter @Inject constructor(
 ) : BasePresenter<TrainingContract.View>(),
     TrainingContract.Presenter {
 
-    private var mTraining: Training? = null
-    private var state : TrainingState = TrainingState.STOPPED
+    private var mTraining: Training? =null
+
+    private val simpleDateFormat = SimpleDateFormat("dd MMM YY HH:mm")
 
     override fun onAddExercisesClicked() {
-        view?.showExerciseInput()
+        view?.showExerciseInput(
+            Exercise(null, null, null, null, null, null)
+        )
     }
 
-    override fun onExercisesDataReceived(name: String, weight: Float, count: Int, sets: Int) {
+    override fun onExercisesDataReceived(exercise: Exercise) {
 
         if (mTraining == null) {
-            with(Training(null, "Без имени ${Date()}", false)) {
+            with(Training(null, "Тренировка от ${simpleDateFormat.format(Date())}", false)) {
                 trainingsService.save(this)
                     .zipWith(Single.just(this)) { id, training ->
                         training.copy(id = id)
@@ -41,9 +46,12 @@ class TrainingPresenter @Inject constructor(
         }
             .flatMap {
                 mTraining = it
-                exercisesService.create(
-                    Exercise(null, name, it.id!!, weight, count, sets)
-                )
+                if (exercise.id == null){
+                    exercisesService.create(exercise.copy(trainingId = it.id!!))
+                } else {
+                    exercisesService.update(exercise)
+                        .andThen(Single.just(exercise))
+                }
             }
             .safetySubscribe(
                 {
@@ -57,35 +65,21 @@ class TrainingPresenter @Inject constructor(
 
     override fun onTrainingReceived(trainingId: Long) {
 
-        trainingsService.get(trainingId)
-            .flatMap { training ->
-                exercisesService.getByTrainingId(training.id!!).map {
-                    training to it
-                }
-            }
+        trainingsService.getFullTraining(trainingId)
             .safetySubscribe(
-                { (training, exercises) ->
-                    mTraining = training
-                    exercises.forEach {
+                {
+                    mTraining = it.training
+                    it.exercises.forEach {
                         view?.addExercise(it)
                     }
-
+                    it.sets.forEach {
+                        view?.addSet(it)
+                    }
                 },
                 {
                     it.printStackTrace()
                 }
             )
-    }
-
-    override fun onStartTrainingClicked() {
-        if (state == TrainingState.ACTIVE){
-            state = TrainingState.STOPPED
-            view?.showStoppedTrainingScreen()
-        } else {
-            state = TrainingState.ACTIVE
-            view?.showActiveTrainingScreen()
-        }
-
     }
 
     override fun onExerciseDeleteClicked(exercise: Exercise) {
@@ -100,25 +94,27 @@ class TrainingPresenter @Inject constructor(
                 })
     }
 
-    override fun onSetClicked(exercise: Exercise, setIndex: Int) {
+    override fun onExerciseEditClicked(exercise: Exercise) {
+        view?.showExerciseInput(exercise)
+    }
 
-        view?.showSetInput(exercise.weight, exercise.count){
-            weight, count ->
-            setsService.create(Set(
-                null,
-                exercise.id!!,
-                count,
-                weight,
-                setIndex
-            ))
-                .safetySubscribe(
-                    {
-                        view?.addSet(it)
-                    },
-                    {
-                        it.printStackTrace()
-                    }
-                )
-        }
+    override fun onSetClicked(exercise: Exercise, set: Set?, setIndex : Int) {
+
+        view?.showSetInput(
+            set ?: Set(null, exercise.id!!, exercise.count!!, exercise.weight!!, setIndex)
+        )
+    }
+
+    override fun onSetDataReceived(set: Set) {
+
+        setsService.createOrUpdate(set)
+            .safetySubscribe(
+                {
+                    view?.addSet(it)
+                },
+                {
+                    it.printStackTrace()
+                }
+            )
     }
 }

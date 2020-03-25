@@ -9,4 +9,6 @@ interface TrainingsService {
     fun save(training: Training): Single<Long>
 
     fun get(id : Long) : Single<Training>
+
+    fun getFullTraining(id : Long) : Single<FullTraining>
 }

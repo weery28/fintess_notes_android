@@ -14,6 +14,9 @@ import me.coweery.fitnessnotes.data.registration.RegistrationServiceImpl
 import me.coweery.fitnessnotes.data.trainings.TrainingsDAO
 import me.coweery.fitnessnotes.data.trainings.TrainingsService
 import me.coweery.fitnessnotes.data.trainings.TrainingsServiceImpl
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.SetsDAO
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.SetsService
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.SetsServiceImpl
 import retrofit2.Retrofit
 import javax.inject.Named
 import javax.inject.Singleton
@@ -95,6 +98,24 @@ class AppDataModule {
         return exercisesService
     }
 
+    //endregion
+
+    //region ==================== Sets ====================
+
+
+    @Provides
+    @Singleton
+    fun provideSetsDao(appDatabase: AppDataBase): SetsDAO {
+
+        return appDatabase.setsDAO
+    }
+
+    @Provides
+    @Singleton
+    fun provideSetsService(setsService: SetsServiceImpl): SetsService {
+
+        return setsService
+    }
 
     //endregion
 

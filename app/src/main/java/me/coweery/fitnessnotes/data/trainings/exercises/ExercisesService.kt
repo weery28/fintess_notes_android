@@ -10,4 +10,6 @@ interface ExercisesService {
     fun getByTrainingId(id : Long) : Single<List<Exercise>>
 
     fun delete(id : Long) : Completable
+
+    fun update(exercise: Exercise) : Completable
 }

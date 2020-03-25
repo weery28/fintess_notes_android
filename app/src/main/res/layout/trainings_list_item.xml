@@ -10,19 +10,11 @@
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         tools:text="test text"
+        android:layout_gravity="center_vertical"
         android:textColor="@android:color/white"
         android:padding="@dimen/side_margin"
         android:textSize="20dp"
         android:layout_height="wrap_content">
     </TextView>
-
-    <CheckBox
-        android:id="@+id/cb_is_complete"
-        android:layout_width="wrap_content"
-        android:textColor="@android:color/white"
-        android:layout_gravity="start|bottom"
-        android:text="Завершено"
-        android:clickable="false"
-        android:layout_height="wrap_content"/>
 
 </androidx.cardview.widget.CardView>
