@@ -1,15 +1,17 @@
 package me.coweery.fitnessnotes.data.trainings
 
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import me.coweery.fitnessnotes.data.trainings.exercises.ExercisesDAO
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.SetsDAO
 import javax.inject.Inject
-import kotlin.random.Random
 
 class TrainingsServiceImpl @Inject constructor(
-    private val trainingsDAO: TrainingsDAO
+    private val trainingsDAO: TrainingsDAO,
+    private val exercisesDAO: ExercisesDAO,
+    private val setsDAO: SetsDAO
 ) : TrainingsService {
 
     override fun getAll(): Single<List<Training>> {
@@ -36,9 +38,21 @@ class TrainingsServiceImpl @Inject constructor(
 
     override fun getFullTraining(id: Long): Single<FullTraining> {
 
-        return trainingsDAO.getFullTraining(id)
+        return trainingsDAO.get(id)
+            .flatMapSingle { training ->
+                exercisesDAO.getByTrainingId(training.id!!)
+                    .flatMap { exercises ->
+                        Observable.fromIterable(exercises)
+                            .flatMapSingle {
+                                setsDAO.getByExerciseId(it.id!!)
+                            }
+                            .toList()
+                            .map { sets ->
+                                FullTraining(training, exercises, sets.flatten())
+                            }
+                    }
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .toSingle()
     }
 }

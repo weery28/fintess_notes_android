@@ -4,11 +4,13 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
 import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
-
 
 class ExercisesListAdapter(
     private val context: Context,
@@ -16,7 +18,6 @@ class ExercisesListAdapter(
     private val onSetClicked: (Exercise, Set?, Int) -> Unit,
     private val onExecrciseEdit: (Exercise) -> Unit
 ) : BaseAdapter() {
-
 
     private val exercises = mutableListOf<Exercise>()
     private val sets = mutableListOf<Set>()
@@ -45,11 +46,7 @@ class ExercisesListAdapter(
             convertView.tag as ViewHolder
         }
 
-        if (exercises[index].weight!! - exercises[index].weight!!.toInt() == 0f) {
-            viewHolder.tvWeight.text = exercises[index].weight!!.toInt().toString()
-        } else {
-            viewHolder.tvWeight.text = exercises[index].weight.toString()
-        }
+        viewHolder.tvWeight.text = exercises[index].weight.beautify()
         viewHolder.tvName.text = exercises[index].name
         viewHolder.tvCount.text = exercises[index].count.toString()
         viewHolder.tvSets.text = exercises[index].sets.toString()
@@ -77,7 +74,7 @@ class ExercisesListAdapter(
                             exercises[index],
                             sets.firstOrNull { set ->
                                 set.exerciseId == exercises[index].id
-                                        && set.index == setIndex
+                                    && set.index == setIndex
                             },
                             setIndex
                         )
@@ -87,7 +84,7 @@ class ExercisesListAdapter(
                     }
                         ?.let {
                             fractionView.findViewById<TextView>(R.id.tv_weight).text =
-                                it.weight.toString()
+                                it.weight.beautify()
                             fractionView.findViewById<TextView>(R.id.tv_count).text =
                                 it.repsCount.toString()
                         }
@@ -104,6 +101,15 @@ class ExercisesListAdapter(
     override fun getItemId(i: Int) = exercises[i].id!!
 
     override fun getCount(): Int = exercises.size
+
+    private fun Float.beautify(): String {
+
+        return if (this - toInt() == 0f) {
+            toInt().toString()
+        } else {
+            toString()
+        }
+    }
 
     fun add(exercise: Exercise) {
         val index = exercises.indexOfFirst { it.id == exercise.id }
