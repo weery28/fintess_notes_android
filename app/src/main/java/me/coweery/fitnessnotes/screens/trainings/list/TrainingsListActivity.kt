@@ -23,7 +23,7 @@ class TrainingsListActivity :
 
     private val trainingsList by lazy { findViewById<ListView>(R.id.lv_trainings_list) }
     private val addTrainingButton by lazy { findViewById<FloatingActionButton>(R.id.fab_add) }
-    private lateinit var adapter : TrainingsListAdapter
+    private lateinit var adapter: TrainingsListAdapter
 
     override fun setupDI() {
         AppContext.appComponent.trainingsListScreenComponent().inject(this)
@@ -36,17 +36,15 @@ class TrainingsListActivity :
         addTrainingButton.setOnClickListener {
             presenter.onAddTrainingClicked()
         }
-        adapter = TrainingsListAdapter(this){
+        adapter = TrainingsListAdapter(this) {
             presenter.onTrainingClicked(it.id!!)
         }
         trainingsList.adapter = adapter
-
     }
 
     override fun onResume() {
         super.onResume()
         presenter.onScreenLoaded()
-
     }
 
     override fun showTrainings(list: List<Training>) {

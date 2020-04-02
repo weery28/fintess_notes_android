@@ -7,10 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import me.coweery.fitnessnotes.R
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.EditText
-import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
-import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 import me.coweery.fitnessnotes.screens.trainings.training.TrainingContract
 
 
@@ -20,7 +17,7 @@ class InputSetFragment(
 
     private lateinit var etWeight: EditText
     private lateinit var etCount: EditText
-    private lateinit var btnSave: Button
+    private lateinit var btnSave: View
 
     private lateinit var set: SetInputContext
 
@@ -52,10 +49,10 @@ class InputSetFragment(
         set = arguments?.getSerializable("set") as SetInputContext
         btnSave.setOnClickListener {
             output.onSetDataReceived(
-                 set.copy(
-                     weight = etWeight.text.toString().toFloat(),
-                     repsCount = etCount.text.toString().toInt()
-                 )
+                set.copy(
+                    weight = etWeight.text.toString().toFloat(),
+                    repsCount = etCount.text.toString().toInt()
+                )
             )
             dismissAllowingStateLoss()
         }

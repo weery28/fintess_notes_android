@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/rounded_rectangle_charcoal_grey"
     android:orientation="vertical">
 
     <TextView
-        android:layout_gravity="center_vertical"
         android:id="@+id/tv_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginStart="@dimen/side_margin"
+        android:textColor="#ffffff"
         android:textSize="18sp"
         android:textStyle="bold"
-        android:textColor="#ffffff"
-        tools:text="Тренировка 1 от 26.03.20 13:30"
-        />
+        tools:text="Тренировка 1 от 26.03.20 13:30" />
 
 </FrameLayout>
