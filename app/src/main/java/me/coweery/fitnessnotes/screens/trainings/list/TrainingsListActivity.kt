@@ -2,8 +2,9 @@ package me.coweery.fitnessnotes.screens.trainings.list
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ListAdapter
 import android.widget.ListView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
@@ -31,7 +32,7 @@ class TrainingsListActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_with_list_toolbar_and_add_button)
+        setContentView(R.layout.activity_trainings)
         setupToolbar()
         addTrainingButton.setOnClickListener {
             presenter.onAddTrainingClicked()
@@ -40,6 +41,13 @@ class TrainingsListActivity :
             presenter.onTrainingClicked(it.id!!)
         }
         trainingsList.adapter = adapter
+
+        val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
+        val toggle = ActionBarDrawerToggle(
+            this, drawer, toolbar, R.string.app_name, R.string.app_name
+        )
+        drawer.addDrawerListener(toggle)
+        toggle.syncState()
     }
 
     override fun onResume() {

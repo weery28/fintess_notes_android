@@ -2,6 +2,8 @@ package me.coweery.fitnessnotes.screens.trainings.training
 
 import android.os.Bundle
 import android.widget.ListView
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Single
@@ -17,6 +19,8 @@ import me.coweery.fitnessnotes.screens.trainings.training.input.InputSetFragment
 import me.coweery.fitnessnotes.screens.trainings.training.input.SetInputContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+
+
 
 class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Presenter>(),
     TrainingContract.View {
