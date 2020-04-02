@@ -46,6 +46,16 @@ class InputSetFragment(
         etCount = view.findViewById(R.id.et_count)
         btnSave = view.findViewById(R.id.btn_save)
 
+        etWeight.setOnFocusChangeListener { _, b ->
+            if (b) {
+                etWeight.setText("")
+            }
+        }
+        etCount.setOnFocusChangeListener { _, b ->
+            if (b) {
+                etCount.setText("")
+            }
+        }
         set = arguments?.getSerializable("set") as SetInputContext
         btnSave.setOnClickListener {
             output.onSetDataReceived(
