@@ -21,7 +21,7 @@ class InputExerciseFragment(
     private lateinit var etWeight: EditText
     private lateinit var etCount: EditText
     private lateinit var etSets: EditText
-    private lateinit var btnSave: Button
+    private lateinit var btnSave: View
 
     private lateinit var exercise: ExerciseInputContext
 

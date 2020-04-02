@@ -29,7 +29,7 @@
                 android:layout_gravity="end|bottom"
                 android:layout_marginEnd="@dimen/side_margin"
                 android:layout_marginBottom="@dimen/side_margin"
-                android:backgroundTint="@android:color/holo_red_light"
+                android:backgroundTint="@color/orange"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_action_add"
                 app:borderWidth="0dp" />
