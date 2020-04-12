@@ -9,9 +9,9 @@ class InputExercisePresenter @Inject constructor(
 ) : InputExerciseContract.Presenter, BasePresenter<InputExerciseContract.View>() {
 
 
-    override fun onTextChanged(text: String) {
+    override fun onTextChanged(text: String, trainingId: Long?) {
 
-        exercisesService.getLastCompletion(text)
+        exercisesService.getLastCompletion(text, trainingId)
             .safetySubscribe(
                 {
                     view?.showLastCompletion(

@@ -128,8 +128,8 @@
         android:id="@+id/tv_completion_not_found"
         android:layout_width="match_parent"
         android:layout_height="@dimen/exercise_dividers_height"
-        android:text="Раннее упражнение не выполнялось"
-        android:textSize="18dp"
+        android:text="@string/exercise_not_found"
+        android:textSize="12dp"
         android:gravity="center"/>
 
     <include layout="@layout/layout_exrcice_with_plan_and_dividers"

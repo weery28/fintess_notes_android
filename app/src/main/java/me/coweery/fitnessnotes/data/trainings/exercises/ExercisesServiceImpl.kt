@@ -45,9 +45,13 @@ class ExercisesServiceImpl @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    override fun getLastCompletion(exerciseName: String): Maybe<ExerciseCompletion> {
+    override fun getLastCompletion(
+        exerciseName: String,
+        exceptTrainingId: Long?
+    ): Maybe<ExerciseCompletion> {
 
-        return trainingsDAO.getLastWithExercise(exerciseName)
+        return (exceptTrainingId?.let { trainingsDAO.getLastWithExercise(exerciseName, it) }
+            ?: trainingsDAO.getLastWithExercise(exerciseName))
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .flatMap {

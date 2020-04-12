@@ -31,19 +31,19 @@ class InputExerciseFragment(
     private lateinit var etCount: EditText
     private lateinit var etSets: EditText
     private lateinit var btnSave: View
-    private lateinit var tvDate : TextView
-    private lateinit var tvWeight : TextView
-    private lateinit var tvCount : TextView
-    private lateinit var llAproaches : LinearLayout
-    private lateinit var lastCompletion : View
-    private lateinit var tvCompletionNotFound : TextView
+    private lateinit var tvDate: TextView
+    private lateinit var tvWeight: TextView
+    private lateinit var tvCount: TextView
+    private lateinit var llAproaches: LinearLayout
+    private lateinit var lastCompletion: View
+    private lateinit var tvCompletionNotFound: TextView
 
     private lateinit var exercise: ExerciseInputContext
 
     private val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
 
     @Inject
-    lateinit var presenter : InputExerciseContract.Presenter
+    lateinit var presenter: InputExerciseContract.Presenter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,7 +73,7 @@ class InputExerciseFragment(
         tvDate = view.findViewById(R.id.tv_name)
         tvCount = view.findViewById(R.id.tv_count)
         tvWeight = view.findViewById(R.id.tv_weight)
-        llAproaches =view.findViewById(R.id.ll_aproaches)
+        llAproaches = view.findViewById(R.id.ll_aproaches)
         tvCompletionNotFound = view.findViewById(R.id.tv_completion_not_found)
         lastCompletion = view.findViewById(R.id.last_completion)
 
@@ -91,18 +91,6 @@ class InputExerciseFragment(
             )
             dismissAllowingStateLoss()
         }
-
-        etName.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(p0: Editable?) {
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                presenter.onTextChanged(etName.text.toString())
-            }
-        })
     }
 
     override fun onResume() {
@@ -112,8 +100,19 @@ class InputExerciseFragment(
         etCount.setText(exercise.count?.toString())
         etName.setText(exercise.name)
         etSets.setText(exercise.sets?.toString())
-        presenter.onTextChanged(etName.text.toString())
+        presenter.onTextChanged(etName.text.toString(), exercise.trainingId)
 
+        etName.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                presenter.onTextChanged(etName.text.toString(), exercise.trainingId)
+            }
+        })
     }
 
     override fun onDestroy() {

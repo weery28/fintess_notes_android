@@ -21,6 +21,6 @@ interface InputExerciseContract {
 
     interface Presenter : MvpContract.Presenter<View> {
 
-        fun onTextChanged(text: String)
+        fun onTextChanged(text: String, trainingId: Long?)
     }
 }
