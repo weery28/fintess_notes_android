@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
-import me.coweery.fitnessnotes.R
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
-import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
+import androidx.fragment.app.DialogFragment
+import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.screens.trainings.training.TrainingContract
-
+import me.coweery.fitnessnotes.screens.trainings.training.ifNotEmpty
 
 class InputExerciseFragment(
     private val exercisesOutput: TrainingContract.ExercisesOutput
@@ -56,9 +55,9 @@ class InputExerciseFragment(
             exercisesOutput.onDataReceived(
                 exercise.copy(
                     name = etName.text.toString(),
-                    weight = etWeight.text.toString().toFloat(),
-                    count = etCount.text.toString().toInt(),
-                    sets = etSets.text.toString().toInt()
+                    weight = etWeight.text.toString().ifNotEmpty({ toFloat() }, 0f),
+                    count = etCount.text.toString().ifNotEmpty({ toInt() }, 0),
+                    sets = etSets.text.toString().ifNotEmpty({ toInt() }, 0)
                 )
 
             )

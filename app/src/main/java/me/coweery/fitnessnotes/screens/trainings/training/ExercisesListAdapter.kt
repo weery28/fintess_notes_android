@@ -8,6 +8,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
 import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
@@ -55,6 +56,9 @@ class ExercisesListAdapter(
             onExecrciseDelete(exercises[index])
         }
 
+        viewHolder.tvName.setOnClickListener {
+            onExecrciseEdit(exercises[index])
+        }
         viewHolder.btnEdit.setOnClickListener {
             onExecrciseEdit(exercises[index])
         }
@@ -69,7 +73,7 @@ class ExercisesListAdapter(
                     layoutParams.weight = 1f
                     layoutParams.width = 0
                     fractionView.layoutParams = layoutParams
-                    fractionView.setOnClickListener { _ ->
+                    fractionView.setOnClickListener {
                         onSetClicked(
                             exercises[index],
                             sets.firstOrNull { set ->
@@ -83,10 +87,25 @@ class ExercisesListAdapter(
                         set.index == setIndex && set.exerciseId == exercises[index].id!!
                     }
                         ?.let {
-                            fractionView.findViewById<TextView>(R.id.tv_weight).text =
-                                it.weight.beautify()
-                            fractionView.findViewById<TextView>(R.id.tv_count).text =
-                                it.repsCount.toString()
+                            fractionView.findViewById<TextView>(R.id.tv_weight).apply {
+                                text = it.weight.beautify()
+                                setTextColor(
+                                    ContextCompat.getColor(
+                                        context,
+                                        android.R.color.holo_green_dark
+                                    )
+                                )
+                            }
+                            fractionView.findViewById<TextView>(R.id.tv_count).apply {
+                                text = it.repsCount.toString()
+                                setTextColor(
+                                    ContextCompat.getColor(
+                                        context,
+                                        android.R.color.holo_green_dark
+                                    )
+                                )
+
+                            }
                         }
                 }
             }

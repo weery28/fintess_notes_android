@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
-import me.coweery.fitnessnotes.R
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
-import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
-import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
+import androidx.fragment.app.DialogFragment
+import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.screens.trainings.training.TrainingContract
-
+import me.coweery.fitnessnotes.screens.trainings.training.ifNotEmpty
 
 class InputSetFragment(
     private val output: TrainingContract.SetsOutput
@@ -23,7 +21,6 @@ class InputSetFragment(
     private lateinit var btnSave: Button
 
     private lateinit var set: SetInputContext
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,10 +49,10 @@ class InputSetFragment(
         set = arguments?.getSerializable("set") as SetInputContext
         btnSave.setOnClickListener {
             output.onSetDataReceived(
-                 set.copy(
-                     weight = etWeight.text.toString().toFloat(),
-                     repsCount = etCount.text.toString().toInt()
-                 )
+                set.copy(
+                    weight = etWeight.text.toString().ifNotEmpty({ toFloat() }, 0f),
+                    repsCount = etCount.text.toString().ifNotEmpty({ toInt() }, 0)
+                )
             )
             dismissAllowingStateLoss()
         }
