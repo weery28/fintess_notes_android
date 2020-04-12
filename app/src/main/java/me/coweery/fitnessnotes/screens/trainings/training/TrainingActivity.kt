@@ -2,8 +2,6 @@ package me.coweery.fitnessnotes.screens.trainings.training
 
 import android.os.Bundle
 import android.widget.ListView
-import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import io.reactivex.Single
@@ -20,22 +18,20 @@ import me.coweery.fitnessnotes.screens.trainings.training.input.SetInputContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-
-
 class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Presenter>(),
     TrainingContract.View {
 
     @Inject
     override lateinit var presenter: TrainingContract.Presenter
 
-    private lateinit var input : DialogFragment
-    private lateinit var setsInput : DialogFragment
+    private lateinit var input: DialogFragment
+    private lateinit var setsInput: DialogFragment
 
     private val exercisesList by lazy { findViewById<ListView>(R.id.lv_trainings_list) }
     private val addExerciseButton by lazy { findViewById<FloatingActionButton>(R.id.fab_add) }
-    private var trainigId : Long? = null
+    private var trainigId: Long? = null
 
-    private lateinit var adapter : ExercisesListAdapter
+    private lateinit var adapter: ExercisesListAdapter
 
     override fun setupDI() {
         AppContext.appComponent.trainingScreenComponent().inject(this)
@@ -68,13 +64,12 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         trainigId?.let { presenter.onTrainingReceived(it) }
     }
 
-
     override fun addExercise(exercise: Exercise) {
         adapter.add(exercise)
     }
 
     override fun deleteExercise(id: Long) {
-        adapter.delete(id)
+        adapter.deleteExercise(id)
     }
 
     override fun onDataReceived(exerciseInputContext: ExerciseInputContext) {
@@ -98,10 +93,17 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
             putSerializable("set", setInputContext)
         }
         setsInput.show(supportFragmentManager, "setInput")
-
     }
 
     override fun addSet(set: Set) {
         adapter.add(set)
+    }
+
+    override fun onSetDeleted(setId: Long?) {
+        presenter.onSetDeleteClicked(setId)
+    }
+
+    override fun deleteSet(id: Long) {
+        adapter.deleteSet(id)
     }
 }

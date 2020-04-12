@@ -7,5 +7,5 @@ data class SetInputContext(
     val exerciseId: Long,
     val repsCount: Int?,
     val weight: Float?,
-    val index : Int
+    val index: Int
 ) : Serializable

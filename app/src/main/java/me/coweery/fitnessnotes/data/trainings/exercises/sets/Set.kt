@@ -24,5 +24,5 @@ data class Set(
     val exerciseId: Long,
     val repsCount: Int,
     val weight: Float,
-    val index : Int
+    val index: Int
 ) : Serializable

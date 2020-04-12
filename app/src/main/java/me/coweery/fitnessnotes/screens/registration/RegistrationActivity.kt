@@ -1,16 +1,8 @@
 package me.coweery.fitnessnotes.screens.registration
 
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
 import me.coweery.fitnessnotes.screens.BaseActivity

@@ -107,7 +107,7 @@ class TrainingPresenter @Inject constructor(
                     view?.deleteExercise(exercise.id)
                 },
                 {
-
+                    it.printStackTrace()
                 })
     }
 
@@ -152,5 +152,14 @@ class TrainingPresenter @Inject constructor(
                     it.printStackTrace()
                 }
             )
+    }
+
+    override fun onSetDeleteClicked(setId: Long?) {
+        setId?.let {
+            setsService.delete(setId)
+                .subscribe {
+                    view?.deleteSet(it)
+                }
+        }
     }
 }

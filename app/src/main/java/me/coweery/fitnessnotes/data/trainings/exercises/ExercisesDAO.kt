@@ -17,8 +17,8 @@ interface ExercisesDAO {
     fun update(exercise: Exercise): Completable
 
     @Query("SELECT * FROM exercise WHERE trainingId = :id")
-    fun getByTrainingId(id : Long) : Single<List<Exercise>>
+    fun getByTrainingId(id: Long): Single<List<Exercise>>
 
     @Query("DELETE FROM exercise WHERE id = :id")
-    fun delete(id : Long) : Completable
+    fun delete(id: Long): Completable
 }

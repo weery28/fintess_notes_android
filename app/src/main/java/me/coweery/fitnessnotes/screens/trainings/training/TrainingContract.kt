@@ -16,6 +16,8 @@ interface TrainingContract {
 
         fun deleteExercise(id: Long)
 
+        fun deleteSet(id: Long)
+
         fun showSetInput(setInputContext: SetInputContext)
 
         fun addSet(set: Set)
@@ -36,6 +38,8 @@ interface TrainingContract {
         fun onSetDataReceived(setInputContext: SetInputContext)
 
         fun onSetClicked(exercise: Exercise, set: Set?, setIndex: Int)
+
+        fun onSetDeleteClicked(esetId: Long?)
     }
 
     interface ExercisesOutput {
@@ -46,5 +50,7 @@ interface TrainingContract {
     interface SetsOutput {
 
         fun onSetDataReceived(setInputContext: SetInputContext)
+
+        fun onSetDeleted(setId: Long?)
     }
 }

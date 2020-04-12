@@ -7,9 +7,9 @@ interface ExercisesService {
 
     fun create(exercise: Exercise): Single<Exercise>
 
-    fun getByTrainingId(id : Long) : Single<List<Exercise>>
+    fun getByTrainingId(id: Long): Single<List<Exercise>>
 
-    fun delete(id : Long) : Completable
+    fun delete(id: Long): Completable
 
-    fun update(exercise: Exercise) : Completable
+    fun update(exercise: Exercise): Completable
 }

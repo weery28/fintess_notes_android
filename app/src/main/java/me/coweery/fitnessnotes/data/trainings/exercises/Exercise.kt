@@ -23,7 +23,7 @@ data class Exercise(
     val id: Long? = null,
     val name: String,
     val trainingId: Long,
-    val weight : Float,
-    val count : Int,
-    val sets : Int
+    val weight: Float,
+    val count: Int,
+    val sets: Int
 ) : Serializable

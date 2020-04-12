@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import android.widget.CheckBox
 import android.widget.TextView
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.data.trainings.Training
@@ -15,9 +14,8 @@ class TrainingsListAdapter(
     private val onItemClicked: (Training) -> Unit
 ) : BaseAdapter() {
 
-
     val trainings = mutableListOf<Training>()
-    private val inflater = LayoutInflater.from(context);
+    private val inflater = LayoutInflater.from(context)
 
     override fun getView(index: Int, convertView: View?, parent: ViewGroup): View {
 

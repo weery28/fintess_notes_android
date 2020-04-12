@@ -8,7 +8,7 @@ interface TrainingsService {
 
     fun save(training: Training): Single<Long>
 
-    fun get(id : Long) : Single<Training>
+    fun get(id: Long): Single<Training>
 
-    fun getFullTraining(id : Long) : Single<FullTraining>
+    fun getFullTraining(id: Long): Single<FullTraining>
 }

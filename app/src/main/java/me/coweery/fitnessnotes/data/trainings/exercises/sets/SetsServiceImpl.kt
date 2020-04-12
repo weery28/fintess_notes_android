@@ -1,5 +1,6 @@
 package me.coweery.fitnessnotes.data.trainings.exercises.sets
 
+import io.reactivex.Completable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.zipWith
@@ -10,15 +11,14 @@ class SetsServiceImpl @Inject constructor(
     private val setsDAO: SetsDAO
 ) : SetsService {
 
-
     override fun createOrUpdate(set: Set): Single<Set> {
 
         return setsDAO.update(set)
             .flatMap {
-                if (it == 0){
+                if (it == 0) {
                     setsDAO.insert(set)
-                        .zipWith(Single.just(set)){
-                                id, s -> s.copy(id = id)
+                        .zipWith(Single.just(set)) { id, s ->
+                            s.copy(id = id)
                         }
                 } else {
                     Single.just(set)
@@ -32,6 +32,13 @@ class SetsServiceImpl @Inject constructor(
     override fun getByExerciseId(exerciseId: Long): Single<List<Set>> {
 
         return setsDAO.getByExerciseId(exerciseId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun delete(setId: Long): Completable {
+
+        return setsDAO.delete(setId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

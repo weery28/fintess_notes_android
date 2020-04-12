@@ -11,7 +11,7 @@ interface TrainingsListContract {
 
         fun showCreateTrainingScreen()
 
-        fun showEditTrainingScreen(id : Long)
+        fun showEditTrainingScreen(id: Long)
     }
 
     interface Presenter : MvpContract.Presenter<View> {
@@ -20,6 +20,6 @@ interface TrainingsListContract {
 
         fun onAddTrainingClicked()
 
-        fun onTrainingClicked(id : Long)
+        fun onTrainingClicked(id: Long)
     }
 }

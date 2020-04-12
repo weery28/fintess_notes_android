@@ -77,8 +77,7 @@ class ExercisesListAdapter(
                         onSetClicked(
                             exercises[index],
                             sets.firstOrNull { set ->
-                                set.exerciseId == exercises[index].id
-                                    && set.index == setIndex
+                                set.exerciseId == exercises[index].id && set.index == setIndex
                             },
                             setIndex
                         )
@@ -104,7 +103,6 @@ class ExercisesListAdapter(
                                         android.R.color.holo_green_dark
                                     )
                                 )
-
                             }
                         }
                 }
@@ -145,8 +143,13 @@ class ExercisesListAdapter(
         notifyDataSetChanged()
     }
 
-    fun delete(id: Long) {
+    fun deleteExercise(id: Long) {
         exercises.removeAt(exercises.indexOfFirst { it.id == id })
+        notifyDataSetChanged()
+    }
+
+    fun deleteSet(id: Long) {
+        sets.removeAt(sets.indexOfFirst { it.id == id })
         notifyDataSetChanged()
     }
 

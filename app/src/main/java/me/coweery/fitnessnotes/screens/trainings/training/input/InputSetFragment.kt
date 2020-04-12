@@ -18,6 +18,7 @@ class InputSetFragment(
     private lateinit var etWeight: EditText
     private lateinit var etCount: EditText
     private lateinit var btnSave: View
+    private lateinit var btnDelete: View
 
     private lateinit var set: SetInputContext
 
@@ -44,6 +45,7 @@ class InputSetFragment(
         etWeight = view.findViewById(R.id.et_weight)
         etCount = view.findViewById(R.id.et_count)
         btnSave = view.findViewById(R.id.btn_save)
+        btnDelete = view.findViewById(R.id.btn_delete)
 
         etWeight.setOnFocusChangeListener { _, b ->
             if (b) {
@@ -63,6 +65,11 @@ class InputSetFragment(
                     repsCount = etCount.text.toString().ifNotEmpty({ toInt() }, 0)
                 )
             )
+            dismissAllowingStateLoss()
+        }
+
+        btnDelete.setOnClickListener {
+            output.onSetDeleted(set.id)
             dismissAllowingStateLoss()
         }
     }

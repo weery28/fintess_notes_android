@@ -31,7 +31,7 @@ abstract class BaseActivity<S : MvpContract.View, T : MvpContract.Presenter<S>> 
 
     abstract fun setupDI()
 
-    protected fun setupToolbar(title : String? = null){
+    protected fun setupToolbar(title: String? = null) {
 
         setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent))
         toolbar.apply {
@@ -62,7 +62,7 @@ abstract class BaseActivity<S : MvpContract.View, T : MvpContract.Presenter<S>> 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
             window.statusBarColor = color
         }
     }
@@ -72,5 +72,4 @@ abstract class BaseActivity<S : MvpContract.View, T : MvpContract.Presenter<S>> 
         upArrow?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
         supportActionBar?.setHomeAsUpIndicator(upArrow)
     }
-
 }
