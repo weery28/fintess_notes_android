@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/exercise_dividers_height"
+    android:background="@color/charcoal_grey"
+    android:orientation="horizontal">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        android:layout_width="96dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:padding="@dimen/side_margin"
+        android:textColor="@android:color/white"
+        app:autoSizeMaxTextSize="20dp"
+        app:autoSizeMinTextSize="6dp"
+        app:autoSizeStepGranularity="2dp"
+        app:autoSizeTextType="uniform"
+        tools:text="very" />
+
+    <include layout="@layout/fraction" />
+
+    <TextView
+        android:id="@+id/tv_sets"
+        android:layout_width="38dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="18dp"
+        tools:text="4" />
+
+    <LinearLayout
+        android:id="@+id/ll_aproaches"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:divider="@drawable/transparent_divider"
+        android:orientation="horizontal"
+        android:showDividers="beginning|middle|end" />
+
+    <ImageView
+        android:layout_width="8dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:backgroundTint="@android:color/holo_red_light"
+        android:paddingStart="4dp"
+        android:scaleType="center"
+        android:src="@drawable/baseline_arrow_left_24" />
+
+</LinearLayout>

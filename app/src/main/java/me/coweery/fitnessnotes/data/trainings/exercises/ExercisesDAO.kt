@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Single
 
 @Dao
@@ -21,4 +22,7 @@ interface ExercisesDAO {
 
     @Query("DELETE FROM exercise WHERE id = :id")
     fun delete(id: Long): Completable
+
+    @Query("SELECT * FROM exercise WHERE trainingId = :id AND name = :name LIMIT 1")
+    fun getByTrainingIdAndName(id: Long, name: String): Maybe<Exercise>
 }

@@ -1,6 +1,7 @@
 package me.coweery.fitnessnotes.screens
 
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.disposables.Disposable
 
@@ -31,6 +32,15 @@ abstract class BasePresenter<T : MvpContract.View> : MvpContract.Presenter<T> {
         onError: (Throwable) -> Unit
     ) {
         disposables.add(subscribe(onComplete, onError))
+        disposables.removeAll { it.isDisposed }
+    }
+
+    protected fun <R> Maybe<R>.safetySubscribe(
+        onSucces: (R) -> Unit,
+        onError: (Throwable) -> Unit,
+        onComplete : () -> Unit
+    ) {
+        disposables.add(subscribe(onSucces, onError, onComplete))
         disposables.removeAll { it.isDisposed }
     }
 
