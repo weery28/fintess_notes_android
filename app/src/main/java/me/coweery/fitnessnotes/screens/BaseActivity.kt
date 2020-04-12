@@ -58,7 +58,7 @@ abstract class BaseActivity<S : MvpContract.View, T : MvpContract.Presenter<S>> 
         }
     }
 
-    private fun setStatusBarColor(color: Int) {
+    protected fun setStatusBarColor(color: Int) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val window = this.window
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)

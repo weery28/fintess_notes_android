@@ -23,19 +23,29 @@ class TrainingPresenter @Inject constructor(
     TrainingContract.Presenter {
 
     private var mTraining: Training? = null
+    private var exercisesCount: Int = 0
 
     private val simpleDateFormat = SimpleDateFormat("dd MMM YY HH:mm")
 
     override fun onAddExercisesClicked() {
         view?.showExerciseInput(
-            ExerciseInputContext(null, null, null, null, null, null)
+            ExerciseInputContext(null, null, null, null, null, null, exercisesCount)
         )
     }
 
     override fun onExercisesDataReceived(exerciseInputContext: ExerciseInputContext) {
 
         if (mTraining == null) {
-            with(Training(null, "Тренировка от ${simpleDateFormat.format(Date())}", false)) {
+            val creationDate = Date()
+            with(
+                Training(
+                    null,
+                    "Тренировка от ${simpleDateFormat.format(creationDate)}",
+                    false,
+                    creationDate,
+                    creationDate
+                )
+            ) {
                 trainingsService.save(this)
                     .zipWith(Single.just(this)) { id, training ->
                         training.copy(id = id)
@@ -54,9 +64,14 @@ class TrainingPresenter @Inject constructor(
                             it.id!!,
                             exerciseInputContext.weight!!,
                             exerciseInputContext.count!!,
-                            exerciseInputContext.sets!!
+                            exerciseInputContext.sets!!,
+                            exerciseInputContext.index
                         )
                     )
+                        .map {
+                            exercisesCount += 1
+                            it
+                        }
                 } else {
                     val exercise = Exercise(
                         exerciseInputContext.id,
@@ -64,7 +79,8 @@ class TrainingPresenter @Inject constructor(
                         it.id!!,
                         exerciseInputContext.weight!!,
                         exerciseInputContext.count!!,
-                        exerciseInputContext.sets!!
+                        exerciseInputContext.sets!!,
+                        exerciseInputContext.index
                     )
                     exercisesService.update(exercise)
                         .andThen(Single.just(exercise))
@@ -86,6 +102,7 @@ class TrainingPresenter @Inject constructor(
             .safetySubscribe(
                 {
                     mTraining = it.training
+                    exercisesCount = it.exercises.size
                     it.exercises.forEach {
                         view?.addExercise(it)
                     }
@@ -119,7 +136,8 @@ class TrainingPresenter @Inject constructor(
                 exercise.trainingId,
                 exercise.weight,
                 exercise.count,
-                exercise.sets
+                exercise.sets,
+                exercise.index
             )
         )
     }

@@ -26,7 +26,6 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
 
     private lateinit var input: DialogFragment
     private lateinit var setsInput: DialogFragment
-
     private val exercisesList by lazy { findViewById<ListView>(R.id.lv_trainings_list) }
     private val addExerciseButton by lazy { findViewById<FloatingActionButton>(R.id.fab_add) }
     private var trainigId: Long? = null
