@@ -1,6 +1,7 @@
 package me.coweery.fitnessnotes.data
 
 import android.content.Context
+import androidx.room.Room
 import dagger.Module
 import dagger.Provides
 import me.coweery.fitnessnotes.data.login.BinaryPrefsCredentialsStorageImpl
@@ -11,15 +12,18 @@ import me.coweery.fitnessnotes.data.login.LoginServiceImpl
 import me.coweery.fitnessnotes.data.registration.RegistrationResource
 import me.coweery.fitnessnotes.data.registration.RegistrationService
 import me.coweery.fitnessnotes.data.registration.RegistrationServiceImpl
+import me.coweery.fitnessnotes.data.trainings.TrainingsDAO
 import me.coweery.fitnessnotes.data.trainings.TrainingsService
 import me.coweery.fitnessnotes.data.trainings.TrainingsServiceImpl
+import me.coweery.fitnessnotes.data.trainings.exercises.ExercisesDAO
+import me.coweery.fitnessnotes.data.trainings.exercises.ExercisesService
+import me.coweery.fitnessnotes.data.trainings.exercises.ExercisesServiceImpl
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.SetsDAO
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.SetsService
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.SetsServiceImpl
 import retrofit2.Retrofit
 import javax.inject.Named
 import javax.inject.Singleton
-import androidx.room.Room
-import me.coweery.fitnessnotes.context.AppContext
-import me.coweery.fitnessnotes.data.trainings.TrainingsDAO
-
 
 @Module
 class AppDataModule {
@@ -64,36 +68,70 @@ class AppDataModule {
 
     //region ==================== Trainings ====================
 
-
     @Provides
     @Singleton
     fun provideTrainingsService(trainingsServiceImpl: TrainingsServiceImpl): TrainingsService {
         return trainingsServiceImpl
     }
 
-    //endregion
-
-    //region ==================== Room ====================
-
-
     @Provides
     @Singleton
-    fun provideAppDatabase(appContext: Context): AppDatabase {
-
-        return Room.databaseBuilder(
-            appContext,
-            AppDatabase::class.java, "fn_database"
-        ).build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideTrainingsDao(appDatabase: AppDatabase) : TrainingsDAO {
+    fun provideTrainingsDao(appDatabase: AppDataBase): TrainingsDAO {
 
         return appDatabase.trainingsDAO
     }
 
     //endregion
 
+    //region ==================== Exercises ====================
 
+    @Provides
+    @Singleton
+    fun provideExercisesDao(appDatabase: AppDataBase): ExercisesDAO {
+
+        return appDatabase.exercisesDAO
+    }
+
+    @Provides
+    @Singleton
+    fun provideExercisesService(exercisesService: ExercisesServiceImpl): ExercisesService {
+
+        return exercisesService
+    }
+
+    //endregion
+
+    //region ==================== Sets ====================
+
+    @Provides
+    @Singleton
+    fun provideSetsDao(appDatabase: AppDataBase): SetsDAO {
+
+        return appDatabase.setsDAO
+    }
+
+    @Provides
+    @Singleton
+    fun provideSetsService(setsService: SetsServiceImpl): SetsService {
+
+        return setsService
+    }
+
+    //endregion
+
+    //region ==================== Room ====================
+
+    @Provides
+    @Singleton
+    fun provideAppDatabase(appContext: Context): AppDataBase {
+
+        return Room.databaseBuilder(
+            appContext,
+            AppDataBase::class.java, "fn_database"
+        )
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    //endregion
 }

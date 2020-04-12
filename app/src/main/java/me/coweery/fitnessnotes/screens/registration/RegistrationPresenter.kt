@@ -13,7 +13,7 @@ class RegistrationPresenter @Inject constructor(
 
     override fun onRegistrationClicked(login: String, password: String, repeatPassword: String) {
 
-        if (password == repeatPassword){
+        if (password == repeatPassword) {
             registrationService.register(login, password)
                 .andThen(loginService.login(login, password))
                 .safetySubscribe(

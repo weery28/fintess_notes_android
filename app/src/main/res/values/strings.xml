@@ -11,4 +11,11 @@
     <string name="google">Google</string>
     <string name="underlined_registration"><u>Регистрация</u></string>
     <string name="underlined_forgot_password"><u>Забыли пароль?</u></string>
+    <string name="weight">Вес</string>
+    <string name="save">СОХРАНИТЬ</string>
+    <string name="count">Повторов</string>
+    <string name="exercise_name">Название упражнения</string>
+    <string name="sets">Подходов</string>
+    <string name="training">Тренировка</string>
+    <string name="delete">УДАЛИТЬ</string>
 </resources>

@@ -1,22 +1,16 @@
 package me.coweery.fitnessnotes.screens.registration
 
-import android.graphics.Color
-import android.graphics.PorterDuff
-import android.graphics.drawable.Drawable
-import android.os.Build
 import android.os.Bundle
-import android.view.WindowManager
 import android.widget.EditText
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
-import androidx.core.content.ContextCompat
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
 import me.coweery.fitnessnotes.screens.BaseActivity
 import javax.inject.Inject
 
-class RegistrationActivity : BaseActivity<RegistrationContract.View, RegistrationContract.Presenter>(), RegistrationContract.View {
+class RegistrationActivity :
+    BaseActivity<RegistrationContract.View, RegistrationContract.Presenter>(),
+    RegistrationContract.View {
 
     @Inject
     override lateinit var presenter: RegistrationContract.Presenter
@@ -30,17 +24,7 @@ class RegistrationActivity : BaseActivity<RegistrationContract.View, Registratio
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration)
-
-        setStatusBarColor(ContextCompat.getColor(this, android.R.color.transparent))
-
-        findViewById<Toolbar>(R.id.toolbar).apply {
-            setBackgroundColor(Color.TRANSPARENT)
-            setSupportActionBar(this)
-            supportActionBar?.title = null
-            supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        }
-
-        setBackArrowColor(ContextCompat.getColor(this, android.R.color.white))
+        setupToolbar()
 
         registrationButton.setOnClickListener {
             onRegistrationClicked()
@@ -65,30 +49,15 @@ class RegistrationActivity : BaseActivity<RegistrationContract.View, Registratio
     }
 
     override fun openMainScreen() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        TODO("not implemented") // To change body of created functions use File | Settings | File Templates.
     }
 
-    private fun onRegistrationClicked(){
+    private fun onRegistrationClicked() {
 
         presenter.onRegistrationClicked(
             etLogin.text.toString(),
             etPassword.text.toString(),
             etRepeatPassword.text.toString()
         )
-    }
-
-    fun AppCompatActivity.setStatusBarColor(color: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val window = this.window
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-            window.statusBarColor = color
-        }
-    }
-
-    fun AppCompatActivity.setBackArrowColor(color: Int) {
-        val upArrow: Drawable? = ContextCompat.getDrawable(this, R.drawable.abc_ic_ab_back_material)
-        upArrow?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
-        supportActionBar?.setHomeAsUpIndicator(upArrow)
     }
 }

@@ -9,7 +9,7 @@ import me.coweery.fitnessnotes.screens.SimpleDIComponent
 class RegistrationModule {
 
     @Provides
-    fun providePresnter(presenter: RegistrationPresenter) : RegistrationContract.Presenter {
+    fun providePresnter(presenter: RegistrationPresenter): RegistrationContract.Presenter {
         return presenter
     }
 }

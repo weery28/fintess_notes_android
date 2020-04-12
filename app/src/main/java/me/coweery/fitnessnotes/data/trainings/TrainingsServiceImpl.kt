@@ -1,48 +1,57 @@
 package me.coweery.fitnessnotes.data.trainings
 
-import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import me.coweery.fitnessnotes.data.trainings.exercises.ExercisesDAO
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.SetsDAO
 import javax.inject.Inject
-import kotlin.random.Random
 
 class TrainingsServiceImpl @Inject constructor(
-    private val trainingsDAO: TrainingsDAO
+    private val trainingsDAO: TrainingsDAO,
+    private val exercisesDAO: ExercisesDAO,
+    private val setsDAO: SetsDAO
 ) : TrainingsService {
 
     override fun getAll(): Single<List<Training>> {
 
-        return trainingsDAO.count()
+        return trainingsDAO.getAll()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .flatMap {
-            if (it == 0L){
-                Observable.fromIterable(0..10)
-                    .flatMapCompletable {
-                        trainingsDAO.insert(
-                            Training(it.toLong(), "Тренировка $it", Random.nextBoolean())
-                        )
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-
-                    }
-                    .andThen(trainingsDAO.getAll().subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()))
-
-
-            } else {
-                trainingsDAO.getAll()
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-            }
-        }
     }
 
-    override fun save(training: Training): Completable {
+    override fun save(training: Training): Single<Long> {
         return trainingsDAO
             .insert(training)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun get(id: Long): Single<Training> {
+
+        return trainingsDAO.get(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .toSingle()
+    }
+
+    override fun getFullTraining(id: Long): Single<FullTraining> {
+
+        return trainingsDAO.get(id)
+            .flatMapSingle { training ->
+                exercisesDAO.getByTrainingId(training.id!!)
+                    .flatMap { exercises ->
+                        Observable.fromIterable(exercises)
+                            .flatMapSingle {
+                                setsDAO.getByExerciseId(it.id!!)
+                            }
+                            .toList()
+                            .map { sets ->
+                                FullTraining(training, exercises, sets.flatten())
+                            }
+                    }
+            }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }

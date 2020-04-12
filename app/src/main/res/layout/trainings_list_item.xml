@@ -1,28 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:background="@android:color/white"
+    android:layout_width="match_parent"
+    android:layout_height="48dp"
+    android:background="@drawable/rounded_rectangle_charcoal_grey"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/tv_name"
-        android:layout_width="match_parent"
-        tools:text="test text"
-        android:textColor="@android:color/white"
-        android:padding="@dimen/side_margin"
-        android:textSize="20dp"
-        android:layout_height="wrap_content">
-    </TextView>
-
-    <CheckBox
-        android:id="@+id/cb_is_complete"
         android:layout_width="wrap_content"
-        android:textColor="@android:color/white"
-        android:layout_gravity="start|bottom"
-        android:text="Завершено"
-        android:clickable="false"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginStart="@dimen/side_margin"
+        android:textColor="#ffffff"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        tools:text="Тренировка 1 от 26.03.20 13:30" />
 
-</androidx.cardview.widget.CardView>
+</FrameLayout>

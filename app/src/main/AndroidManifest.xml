@@ -9,7 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:screenOrientation="sensorPortrait"
-        android:theme="@style/Theme.MaterialComponents.NoActionBar"
+        android:theme="@style/AppTheme"
         android:windowSoftInputMode="stateAlwaysHidden">
         <activity android:name=".screens.login.LoginActivity"/>
         <activity android:name=".screens.splash.SplashActivity">
@@ -21,5 +21,6 @@
         </activity>
         <activity android:name=".screens.registration.RegistrationActivity" />
         <activity android:name=".screens.trainings.list.TrainingsListActivity" />
+        <activity android:name=".screens.trainings.training.TrainingActivity" />
     </application>
 </manifest>

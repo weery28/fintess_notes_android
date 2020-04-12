@@ -20,4 +20,13 @@ class TrainingsListPresenter @Inject constructor(
                 }
             )
     }
+
+    override fun onAddTrainingClicked() {
+
+        view?.showCreateTrainingScreen()
+    }
+
+    override fun onTrainingClicked(id: Long) {
+        view?.showEditTrainingScreen(id)
+    }
 }
