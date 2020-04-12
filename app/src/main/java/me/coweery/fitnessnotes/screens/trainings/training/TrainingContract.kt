@@ -14,16 +14,16 @@ interface TrainingContract {
 
         fun showExerciseInput(exerciseInputContext: ExerciseInputContext)
 
-        fun deleteExercise(id : Long)
+        fun deleteExercise(id: Long)
 
         fun showSetInput(setInputContext: SetInputContext)
 
-        fun addSet(set : Set)
+        fun addSet(set: Set)
     }
 
     interface Presenter : MvpContract.Presenter<View> {
 
-        fun onTrainingReceived(trainingId : Long)
+        fun onTrainingReceived(trainingId: Long)
 
         fun onAddExercisesClicked()
 
@@ -35,7 +35,7 @@ interface TrainingContract {
 
         fun onSetDataReceived(setInputContext: SetInputContext)
 
-        fun onSetClicked(exercise: Exercise, set : Set?, setIndex : Int)
+        fun onSetClicked(exercise: Exercise, set: Set?, setIndex: Int)
     }
 
     interface ExercisesOutput {

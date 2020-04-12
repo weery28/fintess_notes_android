@@ -17,4 +17,5 @@
     <string name="exercise_name">Название упражнения</string>
     <string name="sets">Подходов</string>
     <string name="training">Тренировка</string>
+    <string name="delete">УДАЛИТЬ</string>
 </resources>

@@ -1,39 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/charcoal_grey"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/et_weight"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/side_margin"
-        android:backgroundTint="@color/brown_grey"
-        android:hint="@string/weight"
-        android:inputType="numberDecimal"
-        android:textSize="20dp" />
+        android:baselineAligned="false"
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/et_count"
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            app:boxStrokeColor="@color/edit_text_border_color"
+            app:hintTextColor="@color/orange">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_weight"
+                style="@style/Base.Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/weight"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:textColor="@android:color/white"
+            app:boxStrokeColor="@color/edit_text_border_color"
+            app:hintTextColor="@color/orange">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_count"
+                style="@style/Base.Widget.MaterialComponents.TextInputEditText.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/count"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/side_margin"
-        android:backgroundTint="@color/brown_grey"
-        android:hint="@string/count"
-        android:inputType="number"
-        android:textSize="20dp" />
+        android:layout_marginStart="@dimen/side_margin"
+        android:layout_marginEnd="@dimen/side_margin"
+        android:layout_marginBottom="@dimen/side_margin"
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/btn_save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/side_margin"
-        android:background="@color/orange"
-        android:text="@string/save"
-        android:textColor="@android:color/white" />
+        <TextView
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:text="@string/save"
+            android:textColor="@color/orange"
+            android:textSize="18dp" />
 
+        <TextView
+            android:id="@+id/btn_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_toStartOf="@id/btn_save"
+            android:text="@string/delete"
+            android:textColor="@android:color/white"
+            android:textSize="18dp" />
+
+    </RelativeLayout>
 
 </LinearLayout>

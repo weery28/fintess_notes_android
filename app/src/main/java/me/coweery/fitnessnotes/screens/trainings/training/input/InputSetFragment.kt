@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Button
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import me.coweery.fitnessnotes.R
@@ -18,7 +17,7 @@ class InputSetFragment(
 
     private lateinit var etWeight: EditText
     private lateinit var etCount: EditText
-    private lateinit var btnSave: Button
+    private lateinit var btnSave: View
 
     private lateinit var set: SetInputContext
 
@@ -46,6 +45,16 @@ class InputSetFragment(
         etCount = view.findViewById(R.id.et_count)
         btnSave = view.findViewById(R.id.btn_save)
 
+        etWeight.setOnFocusChangeListener { _, b ->
+            if (b) {
+                etWeight.setText("")
+            }
+        }
+        etCount.setOnFocusChangeListener { _, b ->
+            if (b) {
+                etCount.setText("")
+            }
+        }
         set = arguments?.getSerializable("set") as SetInputContext
         btnSave.setOnClickListener {
             output.onSetDataReceived(
