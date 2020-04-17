@@ -17,4 +17,26 @@ interface TrainingsDAO {
 
     @Query("SELECT * FROM training WHERE id =:id")
     fun get(id: Long): Maybe<Training>
+
+    @Query(
+        """
+        SELECT training.* FROM training
+        JOIN exercise ON training.id = exercise.id
+        WHERE exercise.name = :name
+        ORDER BY date DESC
+        LIMIT 1
+    """
+    )
+    fun getLastWithExercise(name: String): Maybe<Training>
+
+    @Query(
+        """
+        SELECT training.* FROM training
+        JOIN exercise ON training.id = exercise.id
+        WHERE exercise.name = :name AND training.id != :exceptId
+        ORDER BY date DESC
+        LIMIT 1
+    """
+    )
+    fun getLastWithExercise(name: String, exceptId: Long): Maybe<Training>
 }

@@ -1,14 +1,19 @@
 package me.coweery.fitnessnotes.data.trainings.exercises
 
 import io.reactivex.Completable
+import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.zipWith
 import io.reactivex.schedulers.Schedulers
+import me.coweery.fitnessnotes.data.trainings.TrainingsDAO
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.SetsService
 import javax.inject.Inject
 
 class ExercisesServiceImpl @Inject constructor(
-    private val exercisesDAO: ExercisesDAO
+    private val exercisesDAO: ExercisesDAO,
+    private val setsService: SetsService,
+    private val trainingsDAO: TrainingsDAO
 ) : ExercisesService {
 
     override fun create(exercise: Exercise): Single<Exercise> {
@@ -38,5 +43,36 @@ class ExercisesServiceImpl @Inject constructor(
         return exercisesDAO.update(exercise)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getLastCompletion(
+        exerciseName: String,
+        exceptTrainingId: Long?
+    ): Maybe<ExerciseCompletion> {
+
+        return (exceptTrainingId?.let { trainingsDAO.getLastWithExercise(exerciseName, it) }
+            ?: trainingsDAO.getLastWithExercise(exerciseName))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .flatMap {
+                exercisesDAO
+                    .getByTrainingIdAndName(it.id!!, exerciseName)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .map { exercise ->
+                        it to exercise
+                    }
+            }
+            .flatMapSingleElement { (training, exercise) ->
+                setsService.getByExerciseId(exercise.id!!)
+                    .map { sets ->
+                        ExerciseCompletion(
+                            exercise,
+                            sets,
+                            training.date
+                        )
+                    }
+
+            }
     }
 }

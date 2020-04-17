@@ -12,7 +12,7 @@ import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 import me.coweery.fitnessnotes.screens.BaseActivity
 import me.coweery.fitnessnotes.screens.trainings.IntentKey
 import me.coweery.fitnessnotes.screens.trainings.training.input.ExerciseInputContext
-import me.coweery.fitnessnotes.screens.trainings.training.input.InputExerciseFragment
+import me.coweery.fitnessnotes.screens.trainings.training.input.exercise.InputExerciseFragment
 import me.coweery.fitnessnotes.screens.trainings.training.input.InputSetFragment
 import me.coweery.fitnessnotes.screens.trainings.training.input.SetInputContext
 import java.util.concurrent.TimeUnit
@@ -24,7 +24,7 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
     @Inject
     override lateinit var presenter: TrainingContract.Presenter
 
-    private lateinit var input: DialogFragment
+    private lateinit var exercisesInput: InputExerciseFragment
     private lateinit var setsInput: DialogFragment
     private val exercisesList by lazy { findViewById<ListView>(R.id.lv_trainings_list) }
     private val addExerciseButton by lazy { findViewById<FloatingActionButton>(R.id.fab_add) }
@@ -56,7 +56,12 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
                 }
             presenter.onAddExercisesClicked()
         }
-        input = InputExerciseFragment(this)
+        exercisesInput = InputExerciseFragment(
+            this
+        )
+
+        AppContext.appComponent.trainingScreenComponent().inject(exercisesInput)
+
         setsInput = InputSetFragment(this)
         exercisesList.adapter = adapter
 
@@ -76,10 +81,10 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
     }
 
     override fun showExerciseInput(exerciseInputContext: ExerciseInputContext) {
-        input.arguments = Bundle().apply {
+        exercisesInput.arguments = Bundle().apply {
             putSerializable("exercise", exerciseInputContext)
         }
-        input.show(supportFragmentManager, "setInput")
+        exercisesInput.show(supportFragmentManager, "setInput")
     }
 
     override fun onSetDataReceived(setInputContext: SetInputContext) {

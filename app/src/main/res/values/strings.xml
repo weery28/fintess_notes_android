@@ -18,4 +18,6 @@
     <string name="sets">Подходов</string>
     <string name="training">Тренировка</string>
     <string name="delete">УДАЛИТЬ</string>
+    <string name="last_complition">Последнее выполнение</string>
+    <string name="exercise_not_found">Раннее упражнение не выполнялось</string>
 </resources>

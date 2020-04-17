@@ -29,7 +29,7 @@ class TrainingPresenter @Inject constructor(
 
     override fun onAddExercisesClicked() {
         view?.showExerciseInput(
-            ExerciseInputContext(null, null, null, null, null, null, exercisesCount)
+            ExerciseInputContext(null, null, mTraining?.id, null, null, null, exercisesCount)
         )
     }
 
