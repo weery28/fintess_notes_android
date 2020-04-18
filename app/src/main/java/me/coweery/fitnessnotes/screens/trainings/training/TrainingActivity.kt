@@ -3,7 +3,10 @@ package me.coweery.fitnessnotes.screens.trainings.training
 import android.os.Bundle
 import android.widget.ListView
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.woxthebox.draglistview.DragListView
 import io.reactivex.Single
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
@@ -26,11 +29,11 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
 
     private lateinit var exercisesInput: InputExerciseFragment
     private lateinit var setsInput: DialogFragment
-    private val exercisesList by lazy { findViewById<ListView>(R.id.lv_trainings_list) }
+    private val exercisesList by lazy { findViewById<DragListView>(R.id.lv_trainings_list) }
     private val addExerciseButton by lazy { findViewById<FloatingActionButton>(R.id.fab_add) }
     private var trainigId: Long? = null
 
-    private lateinit var adapter: ExercisesListAdapter
+    private lateinit var adapter: ExercisesAdapter
 
     override fun setupDI() {
         AppContext.appComponent.trainingScreenComponent().inject(this)
@@ -42,7 +45,7 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         setContentView(R.layout.activity_training)
         trainigId = intent.extras?.getLong(IntentKey.TRAINING_ID)
         setupToolbar(getString(R.string.training))
-        adapter = ExercisesListAdapter(
+        adapter = NewExercisesAdapter(
             this,
             presenter::onExerciseDeleteClicked,
             presenter::onSetClicked,
@@ -63,7 +66,36 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         AppContext.appComponent.trainingScreenComponent().inject(exercisesInput)
 
         setsInput = InputSetFragment(this)
-        exercisesList.adapter = adapter
+
+        exercisesList.setLayoutManager(LinearLayoutManager(this))
+        exercisesList.setCanDragHorizontally(false)
+        exercisesList.setAdapter(adapter as NewExercisesAdapter, false)
+
+
+        exercisesList.setDragListCallback(object : DragListView.DragListCallbackAdapter(){
+            override fun canDragItemAtPosition(dragPosition: Int): Boolean {
+                return  true
+            }
+
+            override fun canDropItemAtPosition(dropPosition: Int): Boolean {
+                return true
+            }
+        })
+        exercisesList.setDragListListener(object : DragListView.DragListListenerAdapter() {
+
+            override fun onItemDragging(itemPosition: Int, x: Float, y: Float) {
+                println(itemPosition)
+            }
+
+            override fun onItemDragEnded(fromPosition: Int, toPosition: Int) {
+                println(fromPosition)
+                println(toPosition)
+            }
+
+            override fun onItemDragStarted(position: Int) {
+                println(position)
+            }
+        })
 
         trainigId?.let { presenter.onTrainingReceived(it) }
     }

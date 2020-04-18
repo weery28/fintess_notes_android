@@ -12,7 +12,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <ListView
+        <com.woxthebox.draglistview.DragListView
                 android:id="@+id/lv_trainings_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -24,7 +24,7 @@
                 android:clipToPadding="false"
                 android:paddingBottom="76dp">
 
-        </ListView>
+        </com.woxthebox.draglistview.DragListView>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_add"
