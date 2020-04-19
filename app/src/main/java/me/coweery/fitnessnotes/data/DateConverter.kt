@@ -1,7 +1,7 @@
 package me.coweery.fitnessnotes.data
 
 import androidx.room.TypeConverter
-import java.util.Date
+import java.util.*
 
 class DateConverter {
 

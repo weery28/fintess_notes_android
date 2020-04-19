@@ -16,8 +16,6 @@
                 android:id="@+id/lv_trainings_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:divider="@android:color/black"
-                android:dividerHeight="@dimen/side_margin"
                 android:paddingTop="@dimen/side_margin"
                 android:paddingStart="@dimen/side_margin"
                 android:paddingEnd="@dimen/side_margin"

@@ -5,12 +5,13 @@ import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 
 interface ExercisesAdapter {
 
-    fun add(exercise : Exercise)
+    fun add(exercise: Exercise)
 
-    fun add(set : Set)
+    fun update(exercise: Exercise)
 
-    fun deleteExercise(id : Long)
+    fun add(set: Set)
 
-    fun deleteSet(id : Long)
+    fun deleteExercise(id: Long)
 
+    fun deleteSet(id: Long)
 }

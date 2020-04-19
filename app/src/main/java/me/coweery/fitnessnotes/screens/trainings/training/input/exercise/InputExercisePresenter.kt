@@ -8,7 +8,6 @@ class InputExercisePresenter @Inject constructor(
     private val exercisesService: ExercisesService
 ) : InputExerciseContract.Presenter, BasePresenter<InputExerciseContract.View>() {
 
-
     override fun onTextChanged(text: String, trainingId: Long?) {
 
         exercisesService.getLastCompletion(text, trainingId)
@@ -29,6 +28,5 @@ class InputExercisePresenter @Inject constructor(
                     view?.clearLastCompletion()
                 }
             )
-
     }
 }

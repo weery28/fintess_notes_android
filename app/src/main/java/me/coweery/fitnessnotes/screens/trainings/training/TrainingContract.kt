@@ -12,6 +12,8 @@ interface TrainingContract {
 
         fun addExercise(exercise: Exercise)
 
+        fun updateExercise(exercise: Exercise)
+
         fun showExerciseInput(exerciseInputContext: ExerciseInputContext)
 
         fun deleteExercise(id: Long)
@@ -40,6 +42,8 @@ interface TrainingContract {
         fun onSetClicked(exercise: Exercise, set: Set?, setIndex: Int)
 
         fun onSetDeleteClicked(esetId: Long?)
+
+        fun onExercisesIndexesChanged(changedExercises: List<Pair<Int, Exercise>>)
     }
 
     interface ExercisesOutput {

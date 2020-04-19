@@ -4,11 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import dagger.Module
 import dagger.Provides
-import me.coweery.fitnessnotes.data.login.BinaryPrefsCredentialsStorageImpl
-import me.coweery.fitnessnotes.data.login.CredentialsStorage
-import me.coweery.fitnessnotes.data.login.LoginResource
-import me.coweery.fitnessnotes.data.login.LoginService
-import me.coweery.fitnessnotes.data.login.LoginServiceImpl
+import me.coweery.fitnessnotes.data.login.*
 import me.coweery.fitnessnotes.data.registration.RegistrationResource
 import me.coweery.fitnessnotes.data.registration.RegistrationService
 import me.coweery.fitnessnotes.data.registration.RegistrationServiceImpl

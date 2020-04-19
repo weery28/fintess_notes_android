@@ -14,5 +14,7 @@ interface ExercisesService {
 
     fun update(exercise: Exercise): Completable
 
+    fun updateAll(exercises: List<Exercise>): Completable
+
     fun getLastCompletion(exerciseName: String, exceptTrainingId: Long?): Maybe<ExerciseCompletion>
 }
