@@ -12,7 +12,7 @@ import me.coweery.fitnessnotes.screens.BasePresenter
 import me.coweery.fitnessnotes.screens.trainings.training.input.ExerciseInputContext
 import me.coweery.fitnessnotes.screens.trainings.training.input.SetInputContext
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
 import javax.inject.Inject
 
 class TrainingPresenter @Inject constructor(
@@ -70,7 +70,7 @@ class TrainingPresenter @Inject constructor(
                     )
                         .map {
                             exercisesCount += 1
-                            it
+                            it to true
                         }
                 } else {
                     val exercise = Exercise(
@@ -83,12 +83,16 @@ class TrainingPresenter @Inject constructor(
                         exerciseInputContext.index
                     )
                     exercisesService.update(exercise)
-                        .andThen(Single.just(exercise))
+                        .andThen(Single.just(exercise to false))
                 }
             }
             .safetySubscribe(
-                {
-                    view?.addExercise(it)
+                { (exercise, isCreated) ->
+                    if (isCreated) {
+                        view?.addExercise(exercise)
+                    } else {
+                        view?.updateExercise(exercise)
+                    }
                 },
                 {
                     it.printStackTrace()
@@ -103,9 +107,12 @@ class TrainingPresenter @Inject constructor(
                 {
                     mTraining = it.training
                     exercisesCount = it.exercises.size
-                    it.exercises.forEach {
-                        view?.addExercise(it)
-                    }
+                    it.exercises
+                        .asSequence()
+                        .sortedBy { it.index }
+                        .forEach {
+                            view?.addExercise(it)
+                        }
                     it.sets.forEach {
                         view?.addSet(it)
                     }
@@ -179,5 +186,23 @@ class TrainingPresenter @Inject constructor(
                     view?.deleteSet(it)
                 }
         }
+    }
+
+    override fun onExercisesIndexesChanged(changedExercises: List<Pair<Int, Exercise>>) {
+
+        changedExercises.map { (newIndex, exercise) ->
+            exercise.copy(index = newIndex)
+        }
+            .let {
+                exercisesService.updateAll(it).andThen(Single.just(it))
+            }
+            .safetySubscribe(
+                {
+                    it.forEach { view?.updateExercise(it) }
+                },
+                {
+                    it.printStackTrace()
+                }
+            )
     }
 }

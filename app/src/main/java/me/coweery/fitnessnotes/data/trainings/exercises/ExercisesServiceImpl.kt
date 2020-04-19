@@ -45,6 +45,12 @@ class ExercisesServiceImpl @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
     }
 
+    override fun updateAll(exercises: List<Exercise>): Completable {
+        return exercisesDAO.update(*exercises.toTypedArray())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     override fun getLastCompletion(
         exerciseName: String,
         exceptTrainingId: Long?
@@ -72,7 +78,6 @@ class ExercisesServiceImpl @Inject constructor(
                             training.date
                         )
                     }
-
             }
     }
 }

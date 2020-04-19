@@ -4,7 +4,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import me.coweery.fitnessnotes.data.DateConverter
-import java.util.Date
+import java.util.*
 
 @Entity
 @TypeConverters(DateConverter::class)

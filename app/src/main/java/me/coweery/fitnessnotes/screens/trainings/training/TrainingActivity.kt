@@ -1,9 +1,12 @@
 package me.coweery.fitnessnotes.screens.trainings.training
 
 import android.os.Bundle
-import android.widget.ListView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.DialogFragment
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.woxthebox.draglistview.DragListView
 import io.reactivex.Single
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
@@ -12,9 +15,9 @@ import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 import me.coweery.fitnessnotes.screens.BaseActivity
 import me.coweery.fitnessnotes.screens.trainings.IntentKey
 import me.coweery.fitnessnotes.screens.trainings.training.input.ExerciseInputContext
-import me.coweery.fitnessnotes.screens.trainings.training.input.exercise.InputExerciseFragment
 import me.coweery.fitnessnotes.screens.trainings.training.input.InputSetFragment
 import me.coweery.fitnessnotes.screens.trainings.training.input.SetInputContext
+import me.coweery.fitnessnotes.screens.trainings.training.input.exercise.InputExerciseFragment
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -26,11 +29,11 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
 
     private lateinit var exercisesInput: InputExerciseFragment
     private lateinit var setsInput: DialogFragment
-    private val exercisesList by lazy { findViewById<ListView>(R.id.lv_trainings_list) }
+    private val exercisesList by lazy { findViewById<DragListView>(R.id.lv_trainings_list) }
     private val addExerciseButton by lazy { findViewById<FloatingActionButton>(R.id.fab_add) }
     private var trainigId: Long? = null
 
-    private lateinit var adapter: ExercisesListAdapter
+    private lateinit var adapter: NewExercisesAdapter
 
     override fun setupDI() {
         AppContext.appComponent.trainingScreenComponent().inject(this)
@@ -40,14 +43,9 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_training)
-        trainigId = intent.extras?.getLong(IntentKey.TRAINING_ID)
         setupToolbar(getString(R.string.training))
-        adapter = ExercisesListAdapter(
-            this,
-            presenter::onExerciseDeleteClicked,
-            presenter::onSetClicked,
-            presenter::onExerciseEditClicked
-        )
+        setupList()
+
         addExerciseButton.setOnClickListener {
             addExerciseButton.isClickable = false
             Single.timer(1, TimeUnit.SECONDS)
@@ -56,20 +54,21 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
                 }
             presenter.onAddExercisesClicked()
         }
-        exercisesInput = InputExerciseFragment(
-            this
-        )
-
+        exercisesInput = InputExerciseFragment(this)
         AppContext.appComponent.trainingScreenComponent().inject(exercisesInput)
 
         setsInput = InputSetFragment(this)
-        exercisesList.adapter = adapter
 
+        trainigId = intent.extras?.getLong(IntentKey.TRAINING_ID)
         trainigId?.let { presenter.onTrainingReceived(it) }
     }
 
     override fun addExercise(exercise: Exercise) {
         adapter.add(exercise)
+    }
+
+    override fun updateExercise(exercise: Exercise) {
+        adapter.update(exercise)
     }
 
     override fun deleteExercise(id: Long) {
@@ -109,5 +108,45 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
 
     override fun deleteSet(id: Long) {
         adapter.deleteSet(id)
+    }
+
+    private fun setupList() {
+
+        adapter = NewExercisesAdapter(
+            this,
+            presenter::onExerciseDeleteClicked,
+            presenter::onSetClicked,
+            presenter::onExerciseEditClicked
+        )
+
+        val layoutManager = LinearLayoutManager(this)
+        exercisesList.setLayoutManager(layoutManager)
+        exercisesList.setCanDragHorizontally(false)
+        exercisesList.setAdapter(adapter as NewExercisesAdapter, false)
+
+        val dividerItemDecoration = DividerItemDecoration(this, layoutManager.orientation)
+        ContextCompat.getDrawable(this, R.drawable.transparent_horizontal_divider)
+            ?.let(dividerItemDecoration::setDrawable)
+
+        exercisesList.recyclerView.addItemDecoration(dividerItemDecoration)
+
+        exercisesList.setDragListListener(
+            object : DragListView.DragListListenerAdapter() {
+
+                override fun onItemDragEnded(fromPosition: Int, toPosition: Int) {
+                    adapter.itemList
+                        .asSequence()
+                        .mapIndexedNotNull { i, exercise ->
+                            if (exercise.index != i) {
+                                i to exercise
+                            } else {
+                                null
+                            }
+                        }
+                        .toList()
+                        .let(presenter::onExercisesIndexesChanged)
+                }
+            }
+        )
     }
 }

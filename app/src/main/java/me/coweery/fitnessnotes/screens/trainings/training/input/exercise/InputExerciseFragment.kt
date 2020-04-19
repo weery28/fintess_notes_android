@@ -10,8 +10,6 @@ import android.view.WindowManager
 import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.widget.addTextChangedListener
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set

@@ -15,7 +15,7 @@ interface ExercisesDAO {
     fun insert(exercise: Exercise): Single<Long>
 
     @Update
-    fun update(exercise: Exercise): Completable
+    fun update(vararg exercise: Exercise): Completable
 
     @Query("SELECT * FROM exercise WHERE trainingId = :id")
     fun getByTrainingId(id: Long): Single<List<Exercise>>
