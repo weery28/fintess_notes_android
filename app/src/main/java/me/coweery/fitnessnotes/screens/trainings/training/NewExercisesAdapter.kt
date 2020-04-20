@@ -107,24 +107,10 @@ class NewExercisesAdapter(
         }
     }
 
-    override fun add(exercise: Exercise) {
-
-        val oldPositions = itemList
-            .asSequence()
-            .mapIndexed { i, e -> e.id to i }
-            .toMap()
+    override fun addToTail(exercise: Exercise) {
 
         itemList.add(exercise)
-        itemList.sortBy { it.index }
-
-        val insertedAtIndex = itemList.indexOf(exercise)
-        notifyItemInserted(insertedAtIndex)
-
-        itemList.forEachIndexed { i, e ->
-            if (oldPositions[e.id] != null && oldPositions[e.id] != i) {
-                notifyItemMoved(oldPositions[e.id]!!, i)
-            }
-        }
+        notifyItemInserted(itemList.size - 1)
     }
 
     override fun update(exercise: Exercise) {

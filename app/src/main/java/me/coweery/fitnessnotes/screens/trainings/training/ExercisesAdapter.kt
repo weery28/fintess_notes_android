@@ -5,7 +5,7 @@ import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 
 interface ExercisesAdapter {
 
-    fun add(exercise: Exercise)
+    fun addToTail(exercise: Exercise)
 
     fun update(exercise: Exercise)
 

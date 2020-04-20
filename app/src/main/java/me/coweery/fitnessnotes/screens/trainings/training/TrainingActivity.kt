@@ -64,7 +64,7 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
     }
 
     override fun addExercise(exercise: Exercise) {
-        adapter.add(exercise)
+        adapter.addToTail(exercise)
     }
 
     override fun updateExercise(exercise: Exercise) {
@@ -83,7 +83,7 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         exercisesInput.arguments = Bundle().apply {
             putSerializable("exercise", exerciseInputContext)
         }
-        exercisesInput.show(supportFragmentManager, "setInput")
+        exercisesInput.show(supportFragmentManager, "exerciseInput")
     }
 
     override fun onSetDataReceived(setInputContext: SetInputContext) {

@@ -109,17 +109,18 @@ class TrainingPresenter @Inject constructor(
                     exercisesCount = it.exercises.size
                     it.exercises
                         .asSequence()
-                        .sortedBy { it.index }
+                        .sortedBy { it.exercise.index }
                         .forEach {
-                            view?.addExercise(it)
+                            view?.addExercise(it.exercise)
+                            it.sets.forEach {
+                                view?.addSet(it)
+                            }
                         }
-                    it.sets.forEach {
-                        view?.addSet(it)
-                    }
                 },
                 {
                     it.printStackTrace()
-                }
+                },
+                {}
             )
     }
 

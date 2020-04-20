@@ -1,5 +1,6 @@
 package me.coweery.fitnessnotes.data.trainings
 
+import io.reactivex.Maybe
 import io.reactivex.Single
 
 interface TrainingsService {
@@ -10,5 +11,5 @@ interface TrainingsService {
 
     fun get(id: Long): Single<Training>
 
-    fun getFullTraining(id: Long): Single<FullTraining>
+    fun getFullTraining(id: Long): Maybe<TrainingWithExercises>
 }

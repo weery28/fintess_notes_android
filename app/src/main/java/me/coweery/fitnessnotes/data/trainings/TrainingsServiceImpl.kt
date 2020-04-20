@@ -1,6 +1,6 @@
 package me.coweery.fitnessnotes.data.trainings
 
-import io.reactivex.Observable
+import io.reactivex.Maybe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -36,22 +36,9 @@ class TrainingsServiceImpl @Inject constructor(
             .toSingle()
     }
 
-    override fun getFullTraining(id: Long): Single<FullTraining> {
+    override fun getFullTraining(id: Long): Maybe<TrainingWithExercises> {
 
-        return trainingsDAO.get(id)
-            .flatMapSingle { training ->
-                exercisesDAO.getByTrainingId(training.id!!)
-                    .flatMap { exercises ->
-                        Observable.fromIterable(exercises)
-                            .flatMapSingle {
-                                setsDAO.getByExerciseId(it.id!!)
-                            }
-                            .toList()
-                            .map { sets ->
-                                FullTraining(training, exercises, sets.flatten())
-                            }
-                    }
-            }
+        return trainingsDAO.getFullTraining(id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
     }
