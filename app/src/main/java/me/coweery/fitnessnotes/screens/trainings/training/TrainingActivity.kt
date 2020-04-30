@@ -10,13 +10,10 @@ import com.woxthebox.draglistview.DragListView
 import io.reactivex.Single
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
-import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
-import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
+import me.coweery.fitnessnotes.data.trainings.exercises.ExerciseWithSets
 import me.coweery.fitnessnotes.screens.BaseActivity
 import me.coweery.fitnessnotes.screens.trainings.IntentKey
-import me.coweery.fitnessnotes.screens.trainings.training.input.ExerciseInputContext
 import me.coweery.fitnessnotes.screens.trainings.training.input.InputSetFragment
-import me.coweery.fitnessnotes.screens.trainings.training.input.SetInputContext
 import me.coweery.fitnessnotes.screens.trainings.training.input.exercise.InputExerciseFragment
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -63,11 +60,11 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         trainigId?.let { presenter.onTrainingReceived(it) }
     }
 
-    override fun addExercise(exercise: Exercise) {
+    override fun addExercise(exercise: ExerciseWithSets) {
         adapter.addToTail(exercise)
     }
 
-    override fun updateExercise(exercise: Exercise) {
+    override fun updateExercise(exercise: ExerciseWithSets) {
         adapter.update(exercise)
     }
 
@@ -98,16 +95,8 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         setsInput.show(supportFragmentManager, "setInput")
     }
 
-    override fun addSet(set: Set) {
-        adapter.add(set)
-    }
-
     override fun onSetDeleted(setId: Long?) {
         presenter.onSetDeleteClicked(setId)
-    }
-
-    override fun deleteSet(id: Long) {
-        adapter.deleteSet(id)
     }
 
     private fun setupList() {
@@ -137,8 +126,8 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
                     adapter.itemList
                         .asSequence()
                         .mapIndexedNotNull { i, exercise ->
-                            if (exercise.index != i) {
-                                i to exercise
+                            if (exercise.exercise.index != i) {
+                                i to exercise.exercise
                             } else {
                                 null
                             }

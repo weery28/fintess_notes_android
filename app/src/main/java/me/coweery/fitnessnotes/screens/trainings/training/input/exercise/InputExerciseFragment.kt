@@ -15,7 +15,6 @@ import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 import me.coweery.fitnessnotes.screens.trainings.training.TrainingContract
 import me.coweery.fitnessnotes.screens.trainings.training.ifNotEmpty
-import me.coweery.fitnessnotes.screens.trainings.training.input.ExerciseInputContext
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -35,8 +34,6 @@ class InputExerciseFragment(
     private lateinit var llAproaches: LinearLayout
     private lateinit var lastCompletion: View
     private lateinit var tvCompletionNotFound: TextView
-
-    private lateinit var exercise: ExerciseInputContext
 
     private val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
 
@@ -83,7 +80,7 @@ class InputExerciseFragment(
                     name = etName.text.toString(),
                     weight = etWeight.text.toString().ifNotEmpty({ toFloat() }, 0f),
                     count = etCount.text.toString().ifNotEmpty({ toInt() }, 0),
-                    sets = etSets.text.toString().ifNotEmpty({ toInt() }, 0)
+                    setsCount = etSets.text.toString().ifNotEmpty({ toInt() }, 0)
                 )
 
             )
@@ -97,7 +94,7 @@ class InputExerciseFragment(
         etWeight.setText(exercise.weight?.toString())
         etCount.setText(exercise.count?.toString())
         etName.setText(exercise.name)
-        etSets.setText(exercise.sets?.toString())
+        etSets.setText(exercise.setsCount?.toString())
         presenter.onTextChanged(etName.text.toString(), exercise.trainingId)
 
         etName.addTextChangedListener(object : TextWatcher {

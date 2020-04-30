@@ -1,28 +1,24 @@
 package me.coweery.fitnessnotes.screens.trainings.training
 
 import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
-import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
+import me.coweery.fitnessnotes.data.trainings.exercises.ExerciseWithSets
 import me.coweery.fitnessnotes.screens.MvpContract
-import me.coweery.fitnessnotes.screens.trainings.training.input.ExerciseInputContext
-import me.coweery.fitnessnotes.screens.trainings.training.input.SetInputContext
 
 interface TrainingContract {
 
     interface View : MvpContract.View, ExercisesOutput, SetsOutput {
 
-        fun addExercise(exercise: Exercise)
+        fun addExercise(exercise: ExerciseWithSets)
 
-        fun updateExercise(exercise: Exercise)
+        fun updateExercise(exercise: ExerciseWithSets)
 
-        fun showExerciseInput(exerciseInputContext: ExerciseInputContext)
+        fun showUpdateExerciseInput(exercise: ExerciseWithSets)
+
+        fun showCreateExerciseInput(trainingId: Long)
 
         fun deleteExercise(id: Long)
 
-        fun deleteSet(id: Long)
-
-        fun showSetInput(setInputContext: SetInputContext)
-
-        fun addSet(set: Set)
+        fun showSetInput(exercise: ExerciseWithSets)
     }
 
     interface Presenter : MvpContract.Presenter<View> {
@@ -31,29 +27,29 @@ interface TrainingContract {
 
         fun onAddExercisesClicked()
 
-        fun onExercisesDataReceived(exerciseInputContext: ExerciseInputContext)
+        fun onExercisesDataReceived(exercise: ExerciseWithSets)
 
         fun onExerciseDeleteClicked(exercise: Exercise)
 
         fun onExerciseEditClicked(exercise: Exercise)
 
-        fun onSetDataReceived(setInputContext: SetInputContext)
+        fun onSetDataReceived(exercise: ExerciseWithSets)
 
-        fun onSetClicked(exercise: Exercise, set: Set?, setIndex: Int)
+        fun onSetClicked(exercise: ExerciseWithSets, setIndex: Int)
 
-        fun onSetDeleteClicked(esetId: Long?)
+        fun onSetDeleteClicked(setId: Long?)
 
         fun onExercisesIndexesChanged(changedExercises: List<Pair<Int, Exercise>>)
     }
 
     interface ExercisesOutput {
 
-        fun onDataReceived(exerciseInputContext: ExerciseInputContext)
+        fun onDataReceived(exercise: ExerciseWithSets)
     }
 
     interface SetsOutput {
 
-        fun onSetDataReceived(setInputContext: SetInputContext)
+        fun onSetDataReceived(exercise: ExerciseWithSets)
 
         fun onSetDeleted(setId: Long?)
     }
