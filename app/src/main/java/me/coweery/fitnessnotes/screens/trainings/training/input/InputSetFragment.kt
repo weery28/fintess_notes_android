@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import me.coweery.fitnessnotes.R
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 import me.coweery.fitnessnotes.screens.trainings.training.TrainingContract
 import me.coweery.fitnessnotes.screens.trainings.training.ifNotEmpty
 
@@ -20,7 +21,7 @@ class InputSetFragment(
     private lateinit var btnSave: View
     private lateinit var btnDelete: View
 
-    private lateinit var set: SetInputContext
+    private lateinit var set: Set
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,8 +58,9 @@ class InputSetFragment(
                 etCount.setText("")
             }
         }
-        set = arguments?.getSerializable("set") as SetInputContext
+        set = arguments?.getSerializable("set") as Set
         btnSave.setOnClickListener {
+
             output.onSetDataReceived(
                 set.copy(
                     weight = etWeight.text.toString().ifNotEmpty({ toFloat() }, 0f),
@@ -69,14 +71,16 @@ class InputSetFragment(
         }
 
         btnDelete.setOnClickListener {
-            output.onSetDeleted(set.id)
+            if (set.id != null) {
+                output.onSetDeleteClicked(set.id!!)
+            }
             dismissAllowingStateLoss()
         }
     }
 
     override fun onResume() {
         super.onResume()
-        etWeight.setText(set.weight?.toString())
-        etCount.setText(set.repsCount?.toString())
+        etWeight.setText(set.weight.toString())
+        etCount.setText(set.repsCount.toString())
     }
 }

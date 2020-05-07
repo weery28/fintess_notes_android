@@ -1,9 +1,8 @@
-package me.coweery.fleetmanagment.repositories
+package me.coweery.fitnessnotes.data
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import dagger.Module
 import dagger.Provides
-import me.coweery.fitnessnotes.data.Config
 import me.coweery.fitnessnotes.data.login.AuthErrorListenerService
 import me.coweery.fitnessnotes.data.login.CredentialsStorage
 import me.coweery.fitnessnotes.data.login.UnauthorizedErrorListener

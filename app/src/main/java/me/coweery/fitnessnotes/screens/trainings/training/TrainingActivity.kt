@@ -10,7 +10,8 @@ import com.woxthebox.draglistview.DragListView
 import io.reactivex.Single
 import me.coweery.fitnessnotes.R
 import me.coweery.fitnessnotes.context.AppContext
-import me.coweery.fitnessnotes.data.trainings.exercises.ExerciseWithSets
+import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
+import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 import me.coweery.fitnessnotes.screens.BaseActivity
 import me.coweery.fitnessnotes.screens.trainings.IntentKey
 import me.coweery.fitnessnotes.screens.trainings.training.input.InputSetFragment
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Presenter>(),
-    TrainingContract.View {
+    TrainingContract.View, TrainingContract.ExercisesOutput, TrainingContract.SetsOutput {
 
     @Inject
     override lateinit var presenter: TrainingContract.Presenter
@@ -60,42 +61,68 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
         trainigId?.let { presenter.onTrainingReceived(it) }
     }
 
-    override fun addExercise(exercise: ExerciseWithSets) {
-        adapter.addToTail(exercise)
-    }
-
-    override fun updateExercise(exercise: ExerciseWithSets) {
-        adapter.update(exercise)
-    }
 
     override fun deleteExercise(id: Long) {
         adapter.deleteExercise(id)
     }
 
-    override fun onDataReceived(exerciseInputContext: ExerciseInputContext) {
-        presenter.onExercisesDataReceived(exerciseInputContext)
+    override fun showExercise(exercise: Exercise) {
+        adapter.update(exercise)
     }
 
-    override fun showExerciseInput(exerciseInputContext: ExerciseInputContext) {
+    override fun showUpdateExerciseInput(exercise: Exercise) {
+
         exercisesInput.arguments = Bundle().apply {
-            putSerializable("exercise", exerciseInputContext)
+            putSerializable("exercise", exercise)
         }
         exercisesInput.show(supportFragmentManager, "exerciseInput")
     }
 
-    override fun onSetDataReceived(setInputContext: SetInputContext) {
-        presenter.onSetDataReceived(setInputContext)
+    override fun showSet(set: Set) {
+        adapter.update(set)
     }
 
-    override fun showSetInput(setInputContext: SetInputContext) {
+    override fun showCreateExerciseInput(trainingId: Long) {
 
+        exercisesInput.arguments = Bundle().apply {
+            putLong("trainingId", trainingId)
+        }
+        exercisesInput.show(supportFragmentManager, "exerciseInput")
+
+    }
+
+    override fun showCreateSetInput(exerciseId: Long) {
         setsInput.arguments = Bundle().apply {
-            putSerializable("set", setInputContext)
+            putLong("exerciseId", exerciseId)
         }
         setsInput.show(supportFragmentManager, "setInput")
     }
 
-    override fun onSetDeleted(setId: Long?) {
+    override fun deleteSet(id: Long) {
+        adapter.deleteSet(id)
+    }
+
+    override fun actualizeIndexes() {
+        adapter.actualizeIndexes()
+    }
+
+    override fun onExerciseDataReceived(exercise: Exercise) {
+        presenter.onExercisesDataReceived(exercise)
+    }
+
+    override fun onSetDataReceived(set: Set) {
+        presenter.onSetDataReceived(set)
+    }
+
+    override fun showSetInput(set: Set) {
+
+        setsInput.arguments = Bundle().apply {
+            putSerializable("set", set)
+        }
+        setsInput.show(supportFragmentManager, "setInput")
+    }
+
+    override fun onSetDeleteClicked(setId: Long) {
         presenter.onSetDeleteClicked(setId)
     }
 
@@ -133,7 +160,9 @@ class TrainingActivity : BaseActivity<TrainingContract.View, TrainingContract.Pr
                             }
                         }
                         .toList()
-                        .let(presenter::onExercisesIndexesChanged)
+                        .let {
+                            presenter.onExercisesIndexesChanged(it)
+                        }
                 }
             }
         )

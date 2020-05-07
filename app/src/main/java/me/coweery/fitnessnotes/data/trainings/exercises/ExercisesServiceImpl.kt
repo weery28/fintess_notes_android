@@ -31,6 +31,13 @@ class ExercisesServiceImpl @Inject constructor(
             .observeOn(AndroidSchedulers.mainThread())
     }
 
+    override fun getFullByTrainingId(id: Long): Single<List<ExerciseWithSets>> {
+
+        return exercisesDAO.getFullByTrainingId(id)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+    }
+
     override fun delete(id: Long): Completable {
 
         return exercisesDAO.delete(id)
@@ -79,5 +86,12 @@ class ExercisesServiceImpl @Inject constructor(
                         )
                     }
             }
+    }
+
+    override fun getExecrciseCount(trainingId: Long): Single<Int> {
+
+        return exercisesDAO.getExercisesCount(trainingId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
     }
 }

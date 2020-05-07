@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import me.coweery.fitnessnotes.R
+import me.coweery.fitnessnotes.data.trainings.exercises.Exercise
 import me.coweery.fitnessnotes.data.trainings.exercises.sets.Set
 import me.coweery.fitnessnotes.screens.trainings.training.TrainingContract
 import me.coweery.fitnessnotes.screens.trainings.training.ifNotEmpty
@@ -36,6 +37,9 @@ class InputExerciseFragment(
     private lateinit var tvCompletionNotFound: TextView
 
     private val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
+
+    private var exercise: Exercise? = null
+    private var trainingId: Long = 0
 
     @Inject
     lateinit var presenter: InputExerciseContract.Presenter
@@ -72,17 +76,30 @@ class InputExerciseFragment(
         tvCompletionNotFound = view.findViewById(R.id.tv_completion_not_found)
         lastCompletion = view.findViewById(R.id.last_completion)
 
-        exercise = arguments?.getSerializable("exercise") as ExerciseInputContext
+        exercise = arguments?.getSerializable("exercise") as Exercise?
+        trainingId = exercise?.trainingId ?: arguments?.getLong("trainingId")!!
 
         btnSave.setOnClickListener {
-            exercisesOutput.onDataReceived(
-                exercise.copy(
-                    name = etName.text.toString(),
-                    weight = etWeight.text.toString().ifNotEmpty({ toFloat() }, 0f),
-                    count = etCount.text.toString().ifNotEmpty({ toInt() }, 0),
-                    setsCount = etSets.text.toString().ifNotEmpty({ toInt() }, 0)
-                )
+            exercisesOutput.onExerciseDataReceived(
 
+                if (exercise == null) {
+                    Exercise(
+                        null,
+                        name = etName.text.toString(),
+                        weight = etWeight.text.toString().ifNotEmpty({ toFloat() }, 0f),
+                        count = etCount.text.toString().ifNotEmpty({ toInt() }, 0),
+                        sets = etSets.text.toString().ifNotEmpty({ toInt() }, 0),
+                        trainingId = trainingId,
+                        index = -1
+                    )
+                } else {
+                    exercise!!.copy(
+                        name = etName.text.toString(),
+                        weight = etWeight.text.toString().ifNotEmpty({ toFloat() }, 0f),
+                        count = etCount.text.toString().ifNotEmpty({ toInt() }, 0),
+                        sets = etSets.text.toString().ifNotEmpty({ toInt() }, 0)
+                    )
+                }
             )
             dismissAllowingStateLoss()
         }
@@ -91,11 +108,11 @@ class InputExerciseFragment(
     override fun onResume() {
         super.onResume()
         presenter.atachView(this)
-        etWeight.setText(exercise.weight?.toString())
-        etCount.setText(exercise.count?.toString())
-        etName.setText(exercise.name)
-        etSets.setText(exercise.setsCount?.toString())
-        presenter.onTextChanged(etName.text.toString(), exercise.trainingId)
+        etWeight.setText(exercise?.weight?.toString())
+        etCount.setText(exercise?.count?.toString())
+        etName.setText(exercise?.name)
+        etSets.setText(exercise?.sets?.toString())
+        presenter.onTextChanged(etName.text.toString(), exercise?.trainingId)
 
         etName.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -105,7 +122,7 @@ class InputExerciseFragment(
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                presenter.onTextChanged(etName.text.toString(), exercise.trainingId)
+                presenter.onTextChanged(etName.text.toString(), exercise?.trainingId)
             }
         })
     }

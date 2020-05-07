@@ -20,9 +20,15 @@ interface ExercisesDAO {
     @Query("SELECT * FROM exercise WHERE trainingId = :id")
     fun getByTrainingId(id: Long): Single<List<Exercise>>
 
+    @Query("SELECT * FROM exercise WHERE trainingId = :id")
+    fun getFullByTrainingId(id: Long): Single<List<ExerciseWithSets>>
+
     @Query("DELETE FROM exercise WHERE id = :id")
     fun delete(id: Long): Completable
 
     @Query("SELECT * FROM exercise WHERE trainingId = :id AND name = :name LIMIT 1")
     fun getByTrainingIdAndName(id: Long, name: String): Maybe<Exercise>
+
+    @Query("SELECT count(id) FROM exercise WHERE trainingId = :id")
+    fun getExercisesCount(id: Long): Single<Int>
 }

@@ -1,4 +1,4 @@
-package me.coweery.fleetmanagment.repositories
+package me.coweery.fitnessnotes.data
 
 import com.fasterxml.jackson.annotation.JsonProperty
 

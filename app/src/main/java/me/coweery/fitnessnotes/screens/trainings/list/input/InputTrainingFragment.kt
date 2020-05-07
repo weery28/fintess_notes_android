@@ -9,13 +9,13 @@ import android.widget.DatePicker
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import me.coweery.fitnessnotes.R
-import java.util.Calendar
+import java.util.*
 
 class InputTrainingFragment : DialogFragment() {
 
-    private lateinit var etName : EditText
-    private lateinit var etDate : EditText
-    private lateinit var datePicker : DatePicker
+    private lateinit var etName: EditText
+    private lateinit var etDate: EditText
+    private lateinit var datePicker: DatePicker
 
 
     override fun onCreateView(
@@ -50,15 +50,13 @@ class InputTrainingFragment : DialogFragment() {
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH)
-        ){
-                view, year, month, day ->
+        ) { view, year, month, day ->
         }
 
     }
 
     override fun onResume() {
         super.onResume()
-
 
         etName.setText("")
         etDate.setText("")
