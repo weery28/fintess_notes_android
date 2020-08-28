@@ -24,7 +24,7 @@ interface TrainingsDAO {
     @Query(
         """
         SELECT training.* FROM training
-        JOIN exercise ON training.id = exercise.id
+        JOIN exercise ON training.id = exercise.trainingId
         WHERE exercise.name = :name
         ORDER BY date DESC
         LIMIT 1
@@ -35,7 +35,7 @@ interface TrainingsDAO {
     @Query(
         """
         SELECT training.* FROM training
-        JOIN exercise ON training.id = exercise.id
+        JOIN exercise ON training.id = exercise.trainingId
         WHERE exercise.name = :name AND training.id != :exceptId
         ORDER BY date DESC
         LIMIT 1

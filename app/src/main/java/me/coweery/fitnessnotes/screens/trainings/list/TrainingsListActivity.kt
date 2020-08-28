@@ -12,12 +12,14 @@ import me.coweery.fitnessnotes.data.trainings.Training
 import me.coweery.fitnessnotes.screens.BaseActivity
 import me.coweery.fitnessnotes.screens.trainings.IntentKey
 import me.coweery.fitnessnotes.screens.trainings.list.adapter.TrainingsListAdapter
+import me.coweery.fitnessnotes.screens.trainings.list.input.InputTrainingFragment
 import me.coweery.fitnessnotes.screens.trainings.training.TrainingActivity
+import java.util.*
 import javax.inject.Inject
 
 class TrainingsListActivity :
     BaseActivity<TrainingsListContract.View, TrainingsListContract.Presenter>(),
-    TrainingsListContract.View {
+    TrainingsListContract.View, TrainingsListContract.Output {
 
     @Inject
     override lateinit var presenter: TrainingsListContract.Presenter
@@ -25,6 +27,8 @@ class TrainingsListActivity :
     private val trainingsList by lazy { findViewById<ListView>(R.id.lv_trainings_list) }
     private val addTrainingButton by lazy { findViewById<FloatingActionButton>(R.id.fab_add) }
     private lateinit var adapter: TrainingsListAdapter
+
+    private lateinit var inputTraining : InputTrainingFragment
 
     override fun setupDI() {
         AppContext.appComponent.trainingsListScreenComponent().inject(this)
@@ -41,6 +45,8 @@ class TrainingsListActivity :
             presenter.onTrainingClicked(it.id!!)
         }
         trainingsList.adapter = adapter
+
+        inputTraining = InputTrainingFragment(this)
 
         val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
         val toggle = ActionBarDrawerToggle(
@@ -62,12 +68,14 @@ class TrainingsListActivity :
     }
 
     override fun showCreateTrainingScreen() {
-        startActivity(
-            Intent(this, TrainingActivity::class.java)
-        )
+        inputTraining.show(supportFragmentManager, "exerciseInput")
     }
 
-    override fun showEditTrainingScreen(id: Long) {
+    override fun onTrainingDataReceived(name: String, date: Date) {
+        presenter.onTrainingDataReceived(name, date)
+    }
+
+    override fun showTrainingScreen(id: Long) {
         startActivity(
             Intent(this, TrainingActivity::class.java)
                 .putExtra(IntentKey.TRAINING_ID, id)

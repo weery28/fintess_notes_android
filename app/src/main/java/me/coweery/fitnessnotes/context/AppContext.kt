@@ -1,6 +1,7 @@
 package me.coweery.fitnessnotes.context
 
 import android.app.Application
+import me.coweery.fitnessnotes.Database
 
 class AppContext : Application() {
 
@@ -15,7 +16,6 @@ class AppContext : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-
         AppContext.appComponent = initDaggerComponent()
     }
 

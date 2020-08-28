@@ -2,6 +2,7 @@ package me.coweery.fitnessnotes.screens.trainings.list
 
 import me.coweery.fitnessnotes.data.trainings.Training
 import me.coweery.fitnessnotes.screens.MvpContract
+import java.util.*
 
 interface TrainingsListContract {
 
@@ -11,7 +12,7 @@ interface TrainingsListContract {
 
         fun showCreateTrainingScreen()
 
-        fun showEditTrainingScreen(id: Long)
+        fun showTrainingScreen(id: Long)
     }
 
     interface Presenter : MvpContract.Presenter<View> {
@@ -21,5 +22,13 @@ interface TrainingsListContract {
         fun onAddTrainingClicked()
 
         fun onTrainingClicked(id: Long)
+
+        fun onTrainingDataReceived(name : String, date : Date)
+
+    }
+
+    interface Output {
+
+        fun onTrainingDataReceived(name : String, date : Date)
     }
 }

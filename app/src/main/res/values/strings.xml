@@ -20,4 +20,6 @@
     <string name="delete">УДАЛИТЬ</string>
     <string name="last_complition">Последнее выполнение</string>
     <string name="exercise_not_found">Раннее упражнение не выполнялось</string>
+    <string name="training_name">Название тренировки</string>
+    <string name="date">Дата</string>
 </resources>

@@ -1,22 +1,36 @@
 package me.coweery.fitnessnotes.screens.trainings.list.input
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Button
 import android.widget.DatePicker
 import android.widget.EditText
 import androidx.fragment.app.DialogFragment
 import me.coweery.fitnessnotes.R
+import me.coweery.fitnessnotes.screens.trainings.list.TrainingsListContract
+import java.text.SimpleDateFormat
 import java.util.*
 
-class InputTrainingFragment : DialogFragment() {
+class InputTrainingFragment(
+    private val output : TrainingsListContract.Output
+) : DialogFragment(), DatePickerDialog.OnDateSetListener {
 
     private lateinit var etName: EditText
     private lateinit var etDate: EditText
-    private lateinit var datePicker: DatePicker
+    private lateinit var btnSave: View
 
+    private val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
+    private var date = Date()
+    private val calendar = Calendar.getInstance().apply {
+        set(Calendar.HOUR, 0)
+        set(Calendar.MINUTE, 0)
+        set(Calendar.SECOND, 0)
+        set(Calendar.MILLISECOND, 0)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,25 +53,35 @@ class InputTrainingFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         etName = view.findViewById(R.id.et_name)
         etDate = view.findViewById(R.id.et_date)
-        datePicker = DatePicker(context)
+
+        btnSave = view.findViewById(R.id.btn_save)
+        btnSave.setOnClickListener {
+            output.onTrainingDataReceived(etName.text.toString(), date)
+            dismissAllowingStateLoss()
+        }
 
         etDate.setOnClickListener {
 
+            calendar.time = date
+            DatePickerDialog(
+                context!!,
+                this,
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
         }
+    }
 
-        val calendar = Calendar.getInstance()
-        datePicker.init(
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        ) { view, year, month, day ->
-        }
-
+    override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
+        calendar.set(year, month, dayOfMonth)
+        date = calendar.time
+        etDate.setText(simpleDateFormat.format(date))
     }
 
     override fun onResume() {
-        super.onResume()
 
+        super.onResume()
         etName.setText("")
         etDate.setText("")
     }
